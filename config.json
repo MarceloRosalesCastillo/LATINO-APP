@@ -1,0 +1,25 @@
+{
+    "development":{
+        "username": "root",
+        "password": null,
+        "database": "db_latino",
+        "host": "localhost",
+        "dialect": "mysql"
+    },
+    "test":{
+        "usernamer": "root",
+        "password": null,
+        "database": "db_laitno_test",
+        "host": "localhost",
+        "dialect": "mysql"
+    },
+    "production":{
+        "username": "root",
+        "password": null,
+        "database": "db_latino_production",
+        "host": "localhost",
+        "dialect": "mysql"
+    }
+
+
+}
