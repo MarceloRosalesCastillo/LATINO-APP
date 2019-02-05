@@ -1,23 +1,25 @@
 {
-  "development": {
-    "username": "root",
-    "password": null,
-    "database": "database_development",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+  "development":{
+      "username": "root",
+      "password": null,
+      "database": "db_latino",
+      "host": "localhost",
+      "dialect": "mysql"
   },
-  "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+  "test":{
+      "usernamer": "root",
+      "password": null,
+      "database": "db_laitno_test",
+      "host": "localhost",
+      "dialect": "mysql"
   },
-  "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+  "production":{
+      "username": "root",
+      "password": null,
+      "database": "db_latino_production",
+      "host": "localhost",
+      "dialect": "mysql"
   }
+
+
 }
