@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Tutor.associate = function(models) {
     // associations can be defined here
-    Tutor.belongsTo(models.Student, {
+    models.Tutor.belongsTo(models.Student, {
       foreignKey: {
         allowNull: false
       }
