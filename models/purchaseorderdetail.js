@@ -8,12 +8,12 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   PurchaseOrderDetail.associate = function(models) {
     // associations can be defined here
-    PurchaseOrderDetail.belongsTo(models.PurchaseOrder, {
+    models.PurchaseOrderDetail.belongsTo(models.PurchaseOrder, {
       foreignKey: {
         allowNull: false
       }
     });
-    PurchaseOrderDetail.belongsTo(models.Enrollment, {
+    models.PurchaseOrderDetail.belongsTo(models.Enrollment, {
       foreignKey: {
         allowNull: false
       }
