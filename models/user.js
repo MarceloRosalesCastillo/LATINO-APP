@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
 
   }, {});
   User.associate = function(models) {
-    User.hasMany(models.Student);
-    User.hasMany(models.PurchaseOrder);
-    User.hasMany(models.Personal);
-    User.hasMany(models.UserGroup);
-    User.hasMany(models.Enrollment);
+    models.User.hasMany(models.Student);
+    models.User.hasMany(models.PurchaseOrder);
+    models.User.hasMany(models.Personal);
+    models.User.hasMany(models.UserGroup);
+    models.User.hasMany(models.Enrollment);
     // associations can be defined here
   };
   return User;
