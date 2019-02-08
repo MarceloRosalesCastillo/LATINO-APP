@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Assistance.associate = function(models) {
     // associations can be defined here
-    Assistance.hasMany(models.Enrollment);
+    models.Assistance.hasMany(models.Enrollment);
   };
   return Assistance;
 };
