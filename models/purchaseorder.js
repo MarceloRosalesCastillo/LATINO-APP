@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   PurchaseOrder.associate = function(models) {
     // associations can be defined here
-    PurchaseOrder.hasMany(PurchaseOrderDetail);
-    PurchaseOrder.belongsTo(models.User, {
+    models.PurchaseOrder.hasMany(PurchaseOrderDetail);
+    models.PurchaseOrder.belongsTo(models.User, {
       foreignKey: {
         allowNull: false
       }
