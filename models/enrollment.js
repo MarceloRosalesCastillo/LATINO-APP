@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Enrollment.associate = function(models) {
     // associations can be defined here
-    Enrollment.belongsTo(models.User, {
+    models.Enrollment.belongsTo(models.User, {
       foreignKey: {
         allowNull: false
       }
     });
-    Enrollment.belongsTo(models.Assistance, {
+    models.Enrollment.belongsTo(models.Assistance, {
       foreignKey: {
         allowNull: false
       }
