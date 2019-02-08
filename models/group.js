@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Group.associate = function(models) {
     // associations can be defined here
-    Group.hasMany(models.UserGroup);
+    models.Group.hasMany(models.UserGroup);
   };
   return Group;
 };
