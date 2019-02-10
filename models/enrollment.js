@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     paymentmodality: DataTypes.STRING,
     date: DataTypes.DATE,
     price: DataTypes.DECIMAL,
-    nquota: DataTypes.INT,
+    nquota: DataTypes.INTEGER,
     rate: DataTypes.DECIMAL,
     total: DataTypes.DECIMAL,
     

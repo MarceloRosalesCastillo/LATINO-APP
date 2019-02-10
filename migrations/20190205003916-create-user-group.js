@@ -8,8 +8,21 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      address: {
-        type: Sequelize.STRING
+      UserId:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references:{
+          model: "Users",
+          key: 'id'
+        }
+      },
+      GroupId:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references:{
+          model: "Groups",
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

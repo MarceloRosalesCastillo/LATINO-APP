@@ -8,7 +8,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      address: {
+      afterchange: {
+        type: Sequelize.STRING
+      },
+      beforechange: {
+        type: Sequelize.STRING
+      },
+      tablename: {
+        type: Sequelize.STRING
+      },
+      username: {
         type: Sequelize.STRING
       },
       createdAt: {

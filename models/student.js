@@ -2,10 +2,10 @@
 module.exports = (sequelize, DataTypes) => {
   const Student = sequelize.define('Student', {
     
-    studentaddress: DataTypes.STRING,
-    dni: DataTypes.DATE,
-    studentphone: DataTypes.STRING,
+    dni: DataTypes.STRING,
+    phone: DataTypes.STRING,
     birthdate: DataTypes.DATE,
+    address: DataTypes.STRING,
     
   }, {});
   Student.associate = function(models) {

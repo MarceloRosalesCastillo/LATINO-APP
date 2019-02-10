@@ -1,32 +1,36 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('PurchaseOrderDetails', {
+    return queryInterface.createTable('Enrollments', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      concept: {
+      paymentmodality: {
         type: Sequelize.STRING
+      },
+      date: {
+        type: Sequelize.DATE
       },
       price: {
         type: Sequelize.DECIMAL
       },
-      PurchaseOrderId:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references:{
-          model: "PurchaseOrders",
-          key: 'id'
-        }
+      nquota: {
+        type: Sequelize.INTEGER
       },
-      EnrollmentId:{
+      rate: {
+        type: Sequelize.DECIMAL
+      },
+      total: {
+        type: Sequelize.DECIMAL
+      },
+      UserId:{
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{
-          model: "Enrollments",
+          model: "Users",
           key: 'id'
         }
       },
@@ -41,6 +45,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('PurchaseOrderDetails');
+    return queryInterface.dropTable('Enrollments');
   }
 };
