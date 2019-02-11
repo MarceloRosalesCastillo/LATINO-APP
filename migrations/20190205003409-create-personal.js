@@ -9,9 +9,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       adminaddress: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       adminphone: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       UserId:{
@@ -22,14 +24,7 @@ module.exports = {
           key: 'id'
         }
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+     
     });
   },
   down: (queryInterface, Sequelize) => {

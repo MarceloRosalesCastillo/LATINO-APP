@@ -9,18 +9,23 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       dni: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       phone: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       birthdate: {
+        allowNull: false,
         type: Sequelize.DATE
       },
       address: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       UserId:{
+        allowNull: false,
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{
@@ -28,14 +33,7 @@ module.exports = {
           key: 'id'
         }
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+      
     });
   },
   down: (queryInterface, Sequelize) => {

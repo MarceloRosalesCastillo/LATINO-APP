@@ -9,21 +9,27 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       tutorname: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       tutorlastname: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       tutoraddress: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       dni: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       tutorphone: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       StudentId:{
+        allowNull: false,
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{
@@ -31,14 +37,7 @@ module.exports = {
           key: 'id'
         }
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+      
     });
   },
   down: (queryInterface, Sequelize) => {

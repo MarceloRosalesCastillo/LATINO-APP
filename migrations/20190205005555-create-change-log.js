@@ -9,25 +9,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       afterchange: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       beforechange: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       tablename: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       username: {
+        allowNull: false,
         type: Sequelize.STRING
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+      
     });
   },
   down: (queryInterface, Sequelize) => {

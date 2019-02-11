@@ -9,9 +9,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       concept: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       price: {
+        allowNull: false,
         type: Sequelize.DECIMAL
       },
       PurchaseOrderId:{
@@ -30,14 +32,7 @@ module.exports = {
           key: 'id'
         }
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+      
     });
   },
   down: (queryInterface, Sequelize) => {

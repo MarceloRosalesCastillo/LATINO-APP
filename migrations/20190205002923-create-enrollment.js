@@ -9,24 +9,31 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       paymentmodality: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       date: {
+        allowNull: false,
         type: Sequelize.DATE
       },
       price: {
+        allowNull: false,
         type: Sequelize.DECIMAL
       },
       nquota: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       rate: {
+        allowNull: false,
         type: Sequelize.DECIMAL
       },
       total: {
+        allowNull: false,
         type: Sequelize.DECIMAL
       },
       UserId:{
+        allowNull: false,
         type: Sequelize.INTEGER,
         allowNull: false,
         references:{
@@ -34,14 +41,7 @@ module.exports = {
           key: 'id'
         }
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+     
     });
   },
   down: (queryInterface, Sequelize) => {

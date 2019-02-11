@@ -9,12 +9,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       status: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       kind: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       date: {
+        allowNull: false,
         type: Sequelize.DATE
       },
       EnrollmentId:{
@@ -25,14 +28,7 @@ module.exports = {
           key: 'id'
         }
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      }
+      
     });
   },
   down: (queryInterface, Sequelize) => {
