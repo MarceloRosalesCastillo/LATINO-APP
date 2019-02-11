@@ -10,7 +10,15 @@
                             </a>
                         </div>
                         <div class="login-form">
-                            <form action="/signup" method="POST">
+                            <form action="/signup" method="POST" onsubmit="if(document.getElementById('agree').checked) { return true; } else { alert('Por favor acepta los términos de y condiciones.'); return false; }">
+                             <div class="form-group">
+                                    <label>Name</label>
+                                    <input class="au-input au-input--full" type="text" name="name" placeholder="Name" autofocus>
+                                </div>
+                                 <div class="form-group">
+                                    <label>Lastname</label>
+                                    <input class="au-input au-input--full" type="text" name="lastname" placeholder="Lastname" autofocus>
+                                </div>
                                 <div class="form-group">
                                     <label>Username</label>
                                     <input class="au-input au-input--full" type="text" name="username" placeholder="Username" autofocus>
@@ -23,23 +31,23 @@
                                     <label>Password</label>
                                     <input class="au-input au-input--full" type="password" name="password" placeholder="Password">
                                 </div>
-                                <div class="login-checkbox">
+                                <div class="login-checkbox" style="margin-bottom: 15px;">
                                     <label>
-                                        <input type="checkbox" name="aggree">Agree the terms and policy
+                                        <input type="checkbox" name="aggree" id="agree">Aceptar Términos y condiciones.
                                     </label>
                                 </div>
-                                <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">register</button>
+                                <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">Registrarse</button>
                                 <div class="social-login-content">
                                     <div class="social-button">
-                                        <button class="au-btn au-btn--block au-btn--blue m-b-20">register with facebook</button>
-                                        <button class="au-btn au-btn--block au-btn--blue2">register with twitter</button>
+                                        <button class="au-btn au-btn--block au-btn--blue m-b-20">Registrarse con Facebook</button>
+                                        <button class="au-btn au-btn--block au-btn--blue2">Registrarse con Gmail</button>
                                     </div>
                                 </div>
                             </form>
                             <div class="register-link">
                                 <p>
-                                    Already have account?
-                                    <a href="#">Sign In</a>
+                                    ¿Ya tienes una cuenta?
+                                    <a href="#">Entrar</a>
                                 </p>
                             </div>
                         </div>

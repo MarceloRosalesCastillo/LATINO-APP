@@ -9,11 +9,15 @@ router.get("/", (req, res) => {
 
 router.get("/contact", (req, res) => {
     res.render("./body/contact.hbs");
-});  
+});
 
-router.get("/blog", (req, res) => {
-    res.render("./body/blog.hbs");
-}); 
+router.get("/about", (req, res) => {
+    res.render("./body/about_us.hbs");
+});
+
+// router.get("/blog", (req, res) => {
+//     res.render("./body/blog.hbs");
+// }); 
 
 
 module.exports = router;

@@ -5020,13 +5020,15 @@ section {
 }
 
 .statistic__item--green {
-    background: #00b26f;
+    background: #04ac4a;
 }
 
 .statistic__item--orange {
     background: #ff8300;
 }
-
+.statistic__item--black {
+    background: #000000;
+}
 .statistic__item--blue {
     background: #00b5e9;
 }

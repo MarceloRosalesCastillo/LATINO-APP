@@ -2,7 +2,7 @@
     <div class="page-wrapper">
         <div class="container m-auto">
              <h1 style="text-align:center; margin-top:20px;">MATRICULA</h1>
-            <div class="container mt-5" action="/students/add" method="POST">
+            <div class="container mt-5" action="/profile/payment" method="">
                 <div class="section__content section__content--p30"></div>
                    
                     <div class="container-fluid"></div>
@@ -13,27 +13,20 @@
                                         <strong>TU INFORMACIÓN</strong>
                                     </div>
                                     <div class="card-body card-block">
-                                        <form action="/admin/add" method="POST">
+                                        <form>
                                             <br>
                                            
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
-                                                    <label for="text-input" class=" form-control-label">Nombres :</label>
+                                                    <label for="text-input" class=" form-control-label">DNI :</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input required="" type="text" id="text-input" name="studentname" placeholder="Nombres" class="form-control">
-                                                    <small class="form-text text-muted">Nombres, solo letras.</small>
+                                                    <input required="" maxlength="8" type="text" id="text-input" name="student_dni" placeholder="DNI" class="form-control"
+                                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
+                                                    <small class="form-text text-muted">Dato Obligatorio.</small>
                                                 </div>
                                             </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="text-input" class=" form-control-label">Apellidos :</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input required="" type="text" id="text-input" name="studentlastname" placeholder="Apellidos" class="form-control">
-                                                    <small class="help-block form-text">Apellidos, solo letras.</small>
-                                                </div>
-                                            </div>
+                                            
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
                                                     <label for="text-input" class=" form-control-label">Dirección :</label>
@@ -72,15 +65,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="email-input" class=" form-control-label">Email :</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input required="" type="email" id="email-input" name="email" placeholder="Email" class="form-control">
-                                                    <small class="help-block form-text">Por favor ingresa tu email.</small>
-                                                </div>
-                                            </div>
+                                            
 
                                     </div>
 
@@ -98,7 +83,7 @@
                                         <strong> INFORMACIÓN DE TU APODERADO</strong>
                                     </div>
                                     <div class="card-body card-block">
-                                        <form action="/admin/add" method="POST">
+                                        <form>
                                             <br>
                                             <div class="row form-group">
                                                 <div class="col col-md-3">

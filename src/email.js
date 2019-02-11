@@ -17,13 +17,15 @@ async function main(){
     }
   });
 
-
+  var rand=Math.floor((Math.random() * 100) + 54);
+  var host='local'//req.get('host');
+  var link="http://"+host+"/verify?id="+rand;
   let mailOptions = {
     from: '"Fred Foo 👻" <rrojasen@continental.edu.pe>', // sender address
-    to: "i1028417@continental.edu.pe", // list of receivers
-    subject: "Hello ✔", // Subject line
+    to: "i1610110@continental.edu.pe", // list of receivers
+    subject: "Please confirm your Email account", // Subject line
     text: "Hello world?", // plain text body
-    html: "<b>Hello world?</b>" // html body
+    html: "Hello,<br> Please Click on the link to verify your email.<br><a href="+link+">Click here to verify</a>"	 // html body
   };
 
 

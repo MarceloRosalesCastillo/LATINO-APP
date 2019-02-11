@@ -1,9 +1,9 @@
 <body class="animsition">
     <div class="page-wrapper">
-        <div class="page-container2" >
+        <div class="page-container2">
             <div class="main-content" action="/students/add" method="POST">
                 <div class="section__content section__content--p30">
-                    
+
                     <div class="container-fluid">
                         <div class="columna-derecha">
                             <div class="col-lg-12">
@@ -16,10 +16,21 @@
                                             <br>
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
-                                                    <label class=" form-control-label">Username :</label>
+                                                    <label for="text-input" class=" form-control-label">Username :</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <button type="button" class="btn btn-success btn-xs">CREATE</button>
+                                                    <input required="" type="text" id="text-input" name="Username"
+                                                        placeholder="Username" class="form-control">
+                                                    <small class="form-text text-muted">Dato Obligatorio.</small>
+                                                </div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col col-md-3">
+                                                    <label for="email-input" class=" form-control-label">Email :</label>
+                                                </div>
+                                                <div class="col-12 col-md-9">
+                                                    <input required="" type="email" id="email-input" name="email" placeholder="Email" class="form-control">
+                                                    <small class="help-block form-text">Email del estudiante.</small>
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -27,7 +38,8 @@
                                                     <label for="text-input" class=" form-control-label">Nombres :</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input required="" type="text" id="text-input" name="studentname" placeholder="Nombres" class="form-control">
+                                                    <input required="" type="text" id="text-input" name="studentname"
+                                                        placeholder="Nombres" class="form-control">
                                                     <small class="form-text text-muted">Nombres, solo letras.</small>
                                                 </div>
                                             </div>
@@ -36,7 +48,8 @@
                                                     <label for="text-input" class=" form-control-label">Apellidos :</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input required="" type="text" id="text-input" name="studentlastname" placeholder="Apellidos" class="form-control">
+                                                    <input required="" type="text" id="text-input" name="studentlastname"
+                                                        placeholder="Apellidos" class="form-control">
                                                     <small class="help-block form-text">Apellidos, solo letras.</small>
                                                 </div>
                                             </div>
@@ -45,7 +58,8 @@
                                                     <label for="text-input" class=" form-control-label">Dirección :</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input required="" type="text" id="text-input" name="studentaddress" placeholder="Dirreción" class="form-control">
+                                                    <input required="" type="text" id="text-input" name="studentaddress"
+                                                        placeholder="Dirreción" class="form-control">
                                                     <small class="help-block form-text">Puede poner una referencia.</small>
                                                 </div>
                                             </div>
@@ -55,39 +69,35 @@
                                                     <label for="text-input" class=" form-control-label">Telefono :</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input required="" maxlength="10" type="tel" id="text-input" name="studentphone" placeholder="Celular" class="form-control"
-                                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
-                                                    <small class="help-block form-text">Ingresa tu Número de celular.</small>
+                                                    <input required="" maxlength="10" type="tel" id="text-input" name="studentphone"
+                                                        placeholder="Celular" class="form-control" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
+                                                    <small class="help-block form-text">Ingresa un Número de celular.</small>
                                                 </div>
                                             </div>
 
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
-                                                    <label for="text-input" class=" form-control-label">Fecha de Nacimiento:</label>
+                                                    <label for="text-input" class=" form-control-label">Fecha de
+                                                        Nacimiento:</label>
                                                 </div>
                                                 <div class="input-group">
-                                                    <input required="" minlength="2" style="width: 100px; left: 15px;"type="text" id="datepick" name="Day" placeholder="Día" class="form-control"
-                                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
-                                                    maxlength="2">
-                                                    <input required="" minlength="2" style="width: 100px;left: 20px;"type="text" id="datepick" name="Month" placeholder="Mes" class="form-control"
-                                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
-                                                    maxlength="2">
-                                                    <input required="" minlength="2" style="width: 100px;left: 25px;"type="text" id="datepick" name="Year" placeholder="Año" class="form-control"
-                                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
-                                                    maxlength="4">
-                                                  
+                                                    <input required="" minlength="2" style="width: 100px; left: 15px;"
+                                                        type="text" id="datepick" name="Day" placeholder="Día" class="form-control"
+                                                        onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+                                                        maxlength="2">
+                                                    <input required="" minlength="2" style="width: 100px;left: 20px;"
+                                                        type="text" id="datepick" name="Month" placeholder="Mes" class="form-control"
+                                                        onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+                                                        maxlength="2">
+                                                    <input required="" minlength="2" style="width: 100px;left: 25px;"
+                                                        type="text" id="datepick" name="Year" placeholder="Año" class="form-control"
+                                                        onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+                                                        maxlength="4">
+
                                                 </div>
                                             </div>
 
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="email-input" class=" form-control-label">Email :</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input required="" type="email" id="email-input" name="email" placeholder="Email" class="form-control">
-                                                    <small class="help-block form-text">Por favor ingresa tu email.</small>
-                                                </div>
-                                            </div>
+
 
                                     </div>
 
@@ -112,7 +122,8 @@
                                                     <label for="text-input" class=" form-control-label">Nombres :</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input required="" type="text" id="text-input" name="nom_tut" placeholder="Nombres" class="form-control">
+                                                    <input required="" type="text" id="text-input" name="nom_tut"
+                                                        placeholder="Nombres" class="form-control">
                                                     <small class="form-text text-muted">Nombres, solo letras.</small>
                                                 </div>
                                             </div>
@@ -121,7 +132,8 @@
                                                     <label for="text-input" class=" form-control-label">Apellidos :</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input required="" type="text" id="text-input" name="ap_tut" placeholder="Apellidos" class="form-control">
+                                                    <input required="" type="text" id="text-input" name="ap_tut"
+                                                        placeholder="Apellidos" class="form-control">
                                                     <small class="help-block form-text">Apellidos, solo letras.</small>
                                                 </div>
                                             </div>
@@ -131,7 +143,8 @@
                                                     <label for="text-input" class=" form-control-label">Dirección:</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input required="" type="text" id="text-input" name="address_tut" placeholder="Dirección" class="form-control">
+                                                    <input required="" type="text" id="text-input" name="address_tut"
+                                                        placeholder="Dirección" class="form-control">
                                                     <small class="form-text text-muted">Opcional.</small>
                                                 </div>
                                             </div>
@@ -141,8 +154,8 @@
                                                     <label for="text-input" class=" form-control-label">DNI :</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input required="" maxlength="8" type="text" id="text-input" name="DNI" placeholder="DNI" class="form-control"
-                                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
+                                                    <input required="" maxlength="8" type="text" id="text-input" name="DNI"
+                                                        placeholder="DNI" class="form-control" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
                                                     <small class="form-text text-muted">Dato Obligatorio.</small>
                                                 </div>
                                             </div>
@@ -152,8 +165,8 @@
                                                     <label for="text-input" class=" form-control-label">Celular :</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input required="" maxlength="10" type="tel" id="tel-input" name="cel_tut" placeholder="Celular" class="form-control"
-                                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
+                                                    <input required="" maxlength="10" type="tel" id="tel-input" name="cel_tut"
+                                                        placeholder="Celular" class="form-control" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
                                                     <small class="help-block form-text">Celular del Apoderado.</small>
                                                 </div>
                                             </div>
@@ -165,19 +178,19 @@
                                 </div>
                             </div>
 
-                            
+
                         </div>
-       
+
                     </div>
 
                 </div>
-                
-                        <div class="btn-centrado">
-                                <button type="submit" class="btn btn-success btn-lg">
-                                    <i class="fa fa-dot-circle-o"></i> Guardar
-                                </button>
-                                
-                        </div>
+
+                <div class="btn-centrado">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        <i class="fa fa-dot-circle-o"></i> Guardar
+                    </button>
+
+                </div>
             </div>
 
 </body>
