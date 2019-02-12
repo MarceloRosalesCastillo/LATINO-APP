@@ -19,7 +19,18 @@ router.get('/assistance', isLoggedIn, (req, res) => {
     res.render('./student/assitance_student', {layout: 'student'});
 });
 
-router.get('/payment', isLoggedIn, (req, res) => {
-    res.render('./student/payment', {layout: 'student'});
+router.get('/checkout', isLoggedIn, (req, res) => {
+    res.render('./student/checkout', {layout: 'student'});
 });
+
+router.post('/checkout/payment.json', isLoggedIn,  (req, res) => {
+    console.log(req.body)
+    res.json({
+        object: {
+            url:"https://www.multimerchantvisanet.com/formularioweb/formulariopago.asp?codtienda=522252201&amount=22&numcompra=2"
+        },
+        status: true,
+    });
+});
+
 module.exports = router;
