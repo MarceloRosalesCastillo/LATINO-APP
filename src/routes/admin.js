@@ -3,15 +3,20 @@ const router = express.Router();
 
 
 const pool = require('../database');
-const {isLoggedIn} = require('../lib/auth');
+const {isLoggedIn, isAdminLoggedIn} = require('../lib/auth');
 
 
-router.get('/add', isLoggedIn, (req, res) => {
+router.get('/', isAdminLoggedIn, (req, res) => {
+    res.render('admin/home.hbs', {layout: 'other'});
+});
+
+
+router.get('/add', isAdminLoggedIn, (req, res) => {
     res.render('admin/add.hbs', {layout: 'other'});
 });
 
   
-router.post('/add', isLoggedIn, async (req, res)=>{
+router.post('/add', isAdminLoggedIn, async (req, res)=>{
     const {studentname, studentlastname, studentaddress, studentphone, Day, Month, Year,
         nom_tut, ap_tut, address_tut, DNI, cel_tut} = req.body;
    // const {name, lastname, address, phone, age} = req.body;
@@ -20,7 +25,7 @@ router.post('/add', isLoggedIn, async (req, res)=>{
         studentlastname,
         studentaddress, 
         studentphone,
-        bitrhdate: Year + "-" + Month + "-" + Day
+        birthdate: Year + "-" + Month + "-" + Day
     };
     const newTutor = {
         //student_id: id_student,
@@ -39,13 +44,13 @@ router.post('/add', isLoggedIn, async (req, res)=>{
     res.redirect('/admin');
 
 });
-    router.get('/', isLoggedIn, async (req, res)=>{
+    router.get('/list', isAdminLoggedIn, async (req, res)=>{
         const students = await pool.query('select * from student_data INNER JOIN tutor_data on student_data.id_student = tutor_data.student_id');
         res.render('admin/list',{layout: 'other', students}); 
         
     });
 
-    router.get('/delete/:id_student', isLoggedIn, async (req, res)=>{
+    router.get('/delete/:id_student', isAdminLoggedIn, async (req, res)=>{
         const {id_student} = req.params;
         await pool.query('DELETE FROM tutor_data WHERE student_id = ?', [id_student]);
         await pool.query('DELETE FROM student_data WHERE id_student = ?', [id_student]);
@@ -53,7 +58,7 @@ router.post('/add', isLoggedIn, async (req, res)=>{
         res.redirect('/admin')
     });
 
-    router.get('/edit/:id_student', isLoggedIn, async (req, res)=>{
+    router.get('/edit/:id_student', isAdminLoggedIn, async (req, res)=>{
         const {id_student} = req.params;
         const students = await pool.query('select * from student_data INNER JOIN tutor_data on student_data.id_student = tutor_data.student_id INNER JOIN users ON student_data.user_id = users.id WHERE student_id = ?', [id_student]);
         //const tutor = await pool.query('SELECT * FROM student_data WHERE id_student = ?', [id_student]);
@@ -61,7 +66,7 @@ router.post('/add', isLoggedIn, async (req, res)=>{
         res.render('admin/edit',{layout: 'other', students: students[0]});
     });
     
-    router.post('/edit/:id_student', isLoggedIn, async (req, res)=>{
+    router.post('/edit/:id_student', isAdminLoggedIn, async (req, res)=>{
         const {id_student} = req.params; 
         const {studentname, studentlastname, studentaddress, studentphone, Day, Month, Year,
             nom_tut, ap_tut, address_tut, DNI, cel_tut} = req.body;

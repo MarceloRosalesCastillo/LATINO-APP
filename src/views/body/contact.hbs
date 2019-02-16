@@ -6,14 +6,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		
-
-		<%include partials/head.html%>
-
     </head>
 	<body>
 		<!-- Navigation -->
-		<% include partials/navigation.html %>
+		
 		<!-- /Header -->
 
 		<!-- Hero-area -->
@@ -39,7 +35,7 @@
 
 		<!-- Contact -->
 		<div id="contact" class="section" style="height: 550px;">
-
+			{{> messages}}
 			<!-- container -->
 			<div class="container">
 
@@ -50,12 +46,12 @@
 					<div class="col-md-6">
 						<div class="contact-form">
 							<h4>Envia un mensaje</h4>
-							<form>
+							<form action="/contact" method="POST">
 								<input class="input" type="text" name="name" placeholder="Nombre">
-								<input class="input" type="email" name="email" placeholder="Email">
-								<input class="input" type="text" name="subject" placeholder="Asunto">
-								<textarea class="input" name="message" placeholder="Cuerpo del mensaje"></textarea>
-								<button class="main-button icon-button pull-right">Enviar</button>
+								<input class="input"  required="" type="email" name="email" placeholder="Email">
+								<input class="input"  required="" type="text" name="subject" placeholder="Asunto">
+								<textarea class="input" name="bodymessage" placeholder="Cuerpo del mensaje"></textarea>
+								<button class="main-button icon-button pull-right" type="submit">Enviar</button>
 							</form>
 						</div>
 					</div>

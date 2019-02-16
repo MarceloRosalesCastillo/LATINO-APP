@@ -42,6 +42,12 @@ passport.use('local.signup', new LocalStrategy({
     newUser.password = await helpers.encryptPassword(password);
     const result = await pool.query('INSERT INTO users SET ?', [newUser]);
     newUser.id = result.insertId;
+    const newUserGroup = {
+        UserId: newUser.id,
+        GroupId: 2
+        
+    }
+    await pool.query('INSERT INTO usergroups SET ?', [newUserGroup]);
     return done(null, newUser);
 }));
 
@@ -50,6 +56,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async(id, done) => {
-    rows = await pool.query('SELECT * FROM users WHERE id = ?', [id]);
+    rows = await pool.query('SELECT * FROM users INNER JOIN usergroups ON users.id = usergroups.UserId WHERE users.id = ?', [id]);
     done(null, rows[0]);
 });
