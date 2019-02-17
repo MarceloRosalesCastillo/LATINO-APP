@@ -24,6 +24,15 @@ module.exports = {
           key: 'id'
         }
       },
+      paypalcode: {
+        allowNull: true,
+        type: Sequelize.STRING(500)
+      },
+      code: {
+        allowNull: true,
+        type: Sequelize.STRING(500)
+      },
+      
      
     });
   },

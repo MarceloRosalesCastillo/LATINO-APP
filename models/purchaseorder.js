@@ -2,7 +2,8 @@
 module.exports = (sequelize, DataTypes) => {
   const PurchaseOrder = sequelize.define('PurchaseOrder', {
     date: DataTypes.DATE,
-    ruc: DataTypes.STRING
+    ruc: DataTypes.STRING,
+    paypalcode: DataTypes.STRING(500)
   }, {});
   PurchaseOrder.associate = function(models) {
     // associations can be defined here
