@@ -41,7 +41,7 @@
                         </ul>
                     </div>
                     <div class="header__tool">
-                        <div class="header-button-item has-noti js-item-menu">
+                        {{!-- <div class="header-button-item has-noti js-item-menu">
                             <i class="zmdi zmdi-notifications"></i>
                             <div class="notifi-dropdown notifi-dropdown--no-bor js-dropdown">
                                 <div class="notifi__title">
@@ -78,7 +78,7 @@
                                     <a href="#">All notifications</a>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         {{!-- <div class="header-button-item js-item-menu">
                             <i class="zmdi zmdi-settings"></i>
                             <div class="setting-dropdown js-dropdown">
@@ -127,30 +127,30 @@
                                 <div class="account-dropdown js-dropdown">
                                     <div class="info clearfix">
                                         <div class="image">
-                                            <a href="#">
+                                            <a>
                                                 <img src="/img/icon/avatar-02.jpg" alt="Avatar-user" />
                                             </a>
                                         </div>
                                         <div class="content">
                                             <h5 class="name">
-                                                <a href="#">{{user.username}}</a>
+                                                <a>{{user.username}}</a>
                                             </h5>
                                             <span class="email">{{user.email}}</span>
                                         </div>
                                     </div>
                                     <div class="account-dropdown__body">
                                         <div class="account-dropdown__item">
-                                            <a href="#">
+                                            <a href="/profile/account">
                                                 <i class="zmdi zmdi-account"></i>Account</a>
                                         </div>
                                         <div class="account-dropdown__item">
-                                            <a href="#">
-                                                <i class="zmdi zmdi-settings"></i>Setting</a>
+                                            <a href="/profile/account/changepassword">
+                                                <i class="zmdi zmdi-settings"></i>Cambiar Contraseña</a>
                                         </div>
-                                        <div class="account-dropdown__item">
+                                        {{!-- <div class="account-dropdown__item">
                                             <a href="#">
                                                 <i class="zmdi zmdi-money-box"></i>Billing</a>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="account-dropdown__footer">
                                         <a href="/logout">

@@ -33,6 +33,14 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      authentication: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      code: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       
     });
   },

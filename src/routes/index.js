@@ -33,6 +33,30 @@ router.post("/contact", isNotLoggedIn, async (req, res) => {
 // router.get("/blog", (req, res) => {
 //     res.render("./body/blog.hbs");
 // }); 
+var data = {};
 
+router.get('/authentication', isLoggedIn, (req, res) => {
+    data = req.user;
+    req.logOut();
+    res.render('./student/authentication');
+});
 
+router.post('/authentication', isNotLoggedIn, async (req, res, next) => {
+
+    var codedb = req.param('code');
+    var compare = data.code;
+    
+    if(compare == codedb) {
+        await pool.query('UPDATE users SET authentication = "TRUE" where users.id = ?', [data.UserId]);
+        res.redirect('/profile');
+    }else{
+        req.flash('message' ,'Codigo incorrecto.');
+        res.redirect('failauthentication');
+    };
+    
+});
+
+router.get('/failauthentication', isNotLoggedIn, (req, res) => {
+        res.render('./student/authentication');
+});
 module.exports = router;

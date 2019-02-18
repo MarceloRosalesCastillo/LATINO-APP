@@ -12,6 +12,7 @@ module.exports = {
         }
         return res.redirect('/profile');
     },
+
     isAdminLoggedIn(req, res, next){
         if(req.isAuthenticated() && req.user.GroupId == 1){
             return next();
