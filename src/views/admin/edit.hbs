@@ -12,7 +12,7 @@
                                         <strong>TU INFORMACIÓN</strong>
                                     </div>
                                     <div class="card-body card-block">
-                                        <form action="/admin/edit/{{students.id_student}}" method="POST">
+                                        <form action="/admin/edit/{{students.id}}" method="POST">
                                             <br>
                                             <div class="row form-group">
                                                 <div class="col col-md-3">
@@ -27,7 +27,7 @@
                                                     <label for="text-input" class=" form-control-label">Nombres :</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input value="{{students.studentname}}" value="studentname" required="" type="text" id="text-input" name="studentname" placeholder="Nombres" class="form-control">
+                                                    <input value="{{students.name}}" value="studentname" required="" type="text" id="text-input" name="studentname" placeholder="Nombres" class="form-control">
                                                     <small class="form-text text-muted">Nombres, solo letras.</small>
                                                 </div>
                                             </div>
@@ -36,7 +36,7 @@
                                                     <label for="text-input" class=" form-control-label">Apellidos :</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input value="{{students.studentlastname}}" required="" type="text" id="text-input" name="studentlastname" placeholder="Apellidos" class="form-control">
+                                                    <input value="{{students.lastname}}" required="" type="text" id="text-input" name="studentlastname" placeholder="Apellidos" class="form-control">
                                                     <small class="help-block form-text">Apellidos, solo letras.</small>
                                                 </div>
                                             </div>
@@ -45,7 +45,7 @@
                                                     <label for="text-input" class=" form-control-label">Dirección :</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input value="{{students.studentaddress}}" required="" type="text" id="text-input" name="studentaddress" placeholder="Dirreción" class="form-control">
+                                                    <input value="{{students.address}}" required="" type="text" id="text-input" name="studentaddress" placeholder="Dirreción" class="form-control">
                                                     <small class="help-block form-text">Puede poner una referencia.</small>
                                                 </div>
                                             </div>
@@ -55,7 +55,7 @@
                                                     <label for="text-input" class=" form-control-label">Telefono :</label>
                                                 </div>
                                                 <div class="col-12 col-md-9">
-                                                    <input value="{{students.studentphone}}" required="" maxlength="10" type="tel" id="text-input" name="studentphone" placeholder="Celular" class="form-control"
+                                                    <input value="{{students.phone}}" required="" maxlength="10" type="tel" id="text-input" name="studentphone" placeholder="Celular" class="form-control"
                                                         onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
                                                     <small class="help-block form-text">Ingresa tu Número de celular.</small>
                                                 </div>
@@ -66,13 +66,13 @@
                                                     <label for="text-input" class=" form-control-label">Fecha de Nacimiento:</label>
                                                 </div>
                                                 <div class="input-group">
-                                                    <input value="{{dateFormatD students.bitrhdate}}" required="" minlength="2" style="width: 100px; left: 15px;" type="text" id="datepick" name="Day" placeholder="Día"
+                                                    <input value="{{dateFormatD students.birthdate}}" required="" minlength="2" style="width: 100px; left: 15px;" type="text" id="datepick" name="Day" placeholder="Día"
                                                         class="form-control" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
                                                         maxlength="2">
-                                                    <input value="{{dateFormatM students.bitrhdate}}" required="" minlength="2" style="width: 100px;left: 20px;" type="text" id="datepick" name="Month" placeholder="Mes"
+                                                    <input value="{{dateFormatM students.birthdate}}" required="" minlength="2" style="width: 100px;left: 20px;" type="text" id="datepick" name="Month" placeholder="Mes"
                                                         class="form-control" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
                                                         maxlength="2">
-                                                    <input value="{{dateFormatY students.bitrhdate}}" required="" minlength="2" style="width: 100px;left: 25px;" type="text" id="datepick" name="Year" placeholder="Año"
+                                                    <input value="{{dateFormatY students.birthdate}}" required="" minlength="2" style="width: 100px;left: 25px;" type="text" id="datepick" name="Year" placeholder="Año"
                                                         class="form-control" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
                                                         maxlength="4">
 

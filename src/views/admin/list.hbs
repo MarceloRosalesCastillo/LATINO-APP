@@ -72,23 +72,23 @@
                                                         <span class="au-checkmark"></span>
                                                     </label>
                                                 </td>
-                                                <td>{{id_student}}</td>
+                                                <td>{{id}}</td>
                                                 <td>
                                                     <span class="block-email" style="color: #04ac4a;">{{studentname}}</span>
                                                 </td>
-                                                <td class="desc">{{studentlastname}}</td>
+                                                <td class="desc">{{name}} {{lastname}}</td>
                                                 <td>{{dateFormat bitrhdate}} </td>
-                                                <td>{{studentaddress}}</td>                                               </td>
-                                                <td>{{studentphone}}</td>
+                                                <td>{{address}}</td>                                               </td>
+                                                <td>{{phone}}</td>
                                                 <td>
                                                     <div class="table-data-feature">
                                                         <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
                                                             <i class="zmdi zmdi-mail-send"></i>
                                                         </button>
-                                                        <button onclick="window.location.href='/admin/edit/{{id_student}}'"class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                        <button onclick="window.location.href='/admin/edit/{{id}}'" class="item" data-toggle="tooltip" data-placement="top" title="Edit">
                                                             <i class="zmdi zmdi-edit"></i>
                                                         </button>
-                                                        <button onclick="window.location.href='/admin/delete/{{id_student}}'" class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                        <button onclick="window.location.href='/admin/delete/{{id}}'" class="item" data-toggle="tooltip" data-placement="top" title="Delete">
                                                             <i class="zmdi zmdi-delete"></i>
                                                         </button>
                                                         <button class="item" data-toggle="tooltip" data-placement="top" title="More">

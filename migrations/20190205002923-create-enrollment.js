@@ -26,11 +26,11 @@ module.exports = {
       },
       rate: {
         allowNull: false,
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL(10,2)
       },
       total: {
         allowNull: false,
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL(10,2)
       },
       UserId:{
         allowNull: false,

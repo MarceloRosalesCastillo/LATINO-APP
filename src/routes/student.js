@@ -8,6 +8,7 @@ const nodemailer = require("nodemailer");
 const paypal = require('paypal-rest-sdk')
 
 const datenow = new Date(Date.now()).toLocaleString();
+var idorder = "";
 
 router.get('/', isLoggedIn, (req, res) => {
     if(req.user.GroupId == 2){
@@ -138,7 +139,7 @@ router.post('/checkout/payment.json', isLoggedIn, (req, res) => {
         }]
     };
 
-    paypal.payment.create(create_payment_json, function (error, payment) {
+    paypal.payment.create(create_payment_json, async function (error, payment) {
         if (error) {
             throw error;
         } else {
@@ -149,8 +150,8 @@ router.post('/checkout/payment.json', isLoggedIn, (req, res) => {
                 date: datenow,
                 paypalcode: payment.id
             }
-            pool.query("INSERT INTO purchaseorders set ?", [newOrder]);
-
+            o = await pool.query("INSERT INTO purchaseorders set ?", [newOrder]);
+            idorder = o.insertId;
 
             Link = payment.links[1].href;
             console.log(Link);
@@ -172,6 +173,31 @@ router.get('/checkout/success', isLoggedIn, async (req, res) => {
     const order = await pool.query('select * from purchaseorders where paypalcode = ? ', [token]);
     var code = "LATINO-000" + order[0].id;
     await pool.query('update purchaseorders set code = ? where paypalcode = ? ', [code, token]);
+
+    const enrollment = {
+      paymentmodality: "Contado",
+      date: datenow,
+      price: monto,
+      nquota: 1,
+      rate: 0.1,
+      total: monto,
+      UserId: req.user.UserId
+
+    };
+   
+    e = await pool.query('INSERT INTO enrollments set ?', [enrollment]);
+    var iden = e.insertId;
+
+    const detailsorden = {
+      concept: "Matricula",
+      price: monto,
+      PurchaseOrderId: idorder,
+      EnrollmentId: iden
+
+    };
+    await pool.query('insert into purchaseorderdetails set ?', [detailsorden]);
+
+
 
     let transporter = nodemailer.createTransport({
         host: "smtp.webfaction.com",
@@ -195,7 +221,7 @@ router.get('/checkout/success', isLoggedIn, async (req, res) => {
 
       let info = transporter.sendMail(mailOptions);
 
-    res.render('./student/successorder', { layout: 'student', order: order[0]});
+      res.render('./student/successorder', { layout: 'student', order: order[0]});
 
 
 
