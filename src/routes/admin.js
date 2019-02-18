@@ -6,8 +6,11 @@ const pool = require('../database');
 const {isLoggedIn, isAdminLoggedIn} = require('../lib/auth');
 
 
-router.get('/', isAdminLoggedIn, (req, res) => {
-    res.render('admin/home.hbs', {layout: 'other'});
+router.get('/', isAdminLoggedIn,async (req, res) => {
+
+    const messages = await pool.query('select * from messages');
+     
+    res.render('admin/home.hbs', {layout: 'other', messages});
 });
 
 
@@ -45,7 +48,7 @@ router.post('/add', isAdminLoggedIn, async (req, res)=>{
 
 });
     router.get('/list', isAdminLoggedIn, async (req, res)=>{
-        const students = await pool.query('select * from student_data INNER JOIN tutor_data on student_data.id_student = tutor_data.student_id');
+        const students = await pool.query('select * from students INNER JOIN tutors on students.id = tutors.id');
         res.render('admin/list',{layout: 'other', students}); 
         
     });

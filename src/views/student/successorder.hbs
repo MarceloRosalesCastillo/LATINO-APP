@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="container" style="margin-top: 50px">
+        <div class="col-md-6">
+
+            <article class="card">
+                <div class="card-body p-5">
+
+                    <h1 style="text-align: center;">PAGO</h1>
+                    <br>
+                    <p style="text-align: center;"> <img src="/img/payment/visa.png">
+                        <img src="/img/payment/mc.png">
+                        <img src="/img/payment/diners.png">
+                        <img src="/img/payment/amex.png"> </p>
+                    <br>
+
+                    <h1>MATRICULA EXITOSA</h1>
+                    <h3>CODIGO DE COMPROBANTE </h3>
+                    <h3 id="vacio">{{order.code}}</h3>
+                </div>
+            </article>
+
+        </div>
+    </div>
+</div>
+<script>
+    if ($("#vacio").html() == "")
+        window.location.reload();
+    
+</script>

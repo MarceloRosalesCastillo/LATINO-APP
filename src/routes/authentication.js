@@ -22,7 +22,17 @@ router.post("/signin", isNotLoggedIn, (req, res, next) => {
         successRedirect: '/profile',
         failureRedirect: '/signin',
         failureFlash: true
-    })(req, res, next);
+    })
+   
+    (req, res, next);
+   
+    // else{
+    //     passport.authenticate('local.signin', {
+    //         successRedirect: '/admin',
+    //         failureRedirect: '/signin',
+    //         failureFlash: true
+    //     });
+    // }
 }); 
 
 
