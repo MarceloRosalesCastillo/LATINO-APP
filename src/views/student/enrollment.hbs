@@ -1,160 +1,178 @@
+<div class="page-wrapper" action="/profile/enrollment" method="POST">
+    <div class="container m-auto">
+        <h1 style="text-align:center; margin-top:20px;">MATRICULA</h1>
+        <div class="container mt-5">
+            <div class="section__content section__content--p30"></div>
 
-    <div class="page-wrapper" action="/profile/enrollment" method="POST">
-        <div class="container m-auto">
-             <h1 style="text-align:center; margin-top:20px;">MATRICULA</h1>
-            <div class="container mt-5">
-                <div class="section__content section__content--p30"></div>
-                   
-                    <div class="container-fluid"></div>
-                        <div class="columna-derechaST">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <strong>TU INFORMACIÓN</strong>
+            <div class="container-fluid"></div>
+            <div class="columna-derechaST">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>TU INFORMACIÓN</strong>
+                        </div>
+                        <div class="card-body card-block">
+                            <form action="/profile/enrollment" method="POST">
+                                <br>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-input" class=" form-control-label">DNI :</label>
                                     </div>
-                                    <div class="card-body card-block">
-                                        <form action="/profile/enrollment" method="POST">
-                                            <br>
-                                           
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="text-input" class=" form-control-label">DNI :</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input required="" maxlength="8" type="text" id="text-input" name="student_dni" placeholder="DNI" class="form-control"
-                                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
-                                                    <small class="form-text text-muted">Dato Obligatorio.</small>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="text-input" class=" form-control-label">Dirección :</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input required="" type="text" id="text-input" name="studentaddress" placeholder="Dirreción" class="form-control">
-                                                    <small class="help-block form-text">Puede poner una referencia.</small>
-                                                </div>
-                                            </div>
-
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="text-input" class=" form-control-label">Telefono :</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input required="" maxlength="10" type="tel" id="text-input" name="studentphone" placeholder="Celular" class="form-control"
-                                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
-                                                    <small class="help-block form-text">Ingresa tu Número de celular.</small>
-                                                </div>
-                                            </div>
-
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="text-input" class="form-control-label">Fecha de Nacimiento:</label>
-                                                </div>
-                                                <div class="row form-group ml-4">
-                                                    <input required="" minlength="2" style="width: 100px; "type="text" id="datepick" name="Day" placeholder="Día" class="form-control"
-                                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
-                                                    maxlength="2">
-                                                    <input required="" minlength="2" style="width: 100px; margin-left:5px;"type="text" id="datepick" name="Month" placeholder="Mes" class="form-control"
-                                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
-                                                    maxlength="2">
-                                                    <input required="" minlength="2" style="width: 100px;margin-left:5px;"type="text" id="datepick" name="Year" placeholder="Año" class="form-control"
-                                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
-                                                    maxlength="4">
-                                                </div>
-                                            </div>
-
-                                            
-
+                                    <div class="col-12 col-md-9">
+                                        <input required="" maxlength="8" type="text" id="text-input" name="student_dni"
+                                            placeholder="DNI" class="form-control" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
+                                        <small class="form-text text-muted">Dato Obligatorio.</small>
                                     </div>
-
                                 </div>
 
-                            </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-input" class=" form-control-label">Dirección :</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input required="" type="text" id="text-input" name="studentaddress"
+                                            placeholder="Dirreción" class="form-control">
+                                        <small class="help-block form-text">Puede poner una referencia.</small>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-input" class=" form-control-label">Telefono :</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input required="" maxlength="10" type="tel" id="text-input" name="studentphone"
+                                            placeholder="Celular" class="form-control" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
+                                        <small class="help-block form-text">Ingresa tu Número de celular.</small>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-input" class="form-control-label">Fecha de Nacimiento:</label>
+                                    </div>
+                                    <div class="row form-group ml-4">
+                                        <input required="" minlength="2" style="width: 100px; " type="text" id="datepick"
+                                            name="Day" placeholder="Día" class="form-control" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+                                            maxlength="2">
+                                        <input required="" minlength="2" style="width: 100px; margin-left:5px;" type="text"
+                                            id="datepick" name="Month" placeholder="Mes" class="form-control"
+                                            onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+                                            maxlength="2">
+                                        <input required="" minlength="2" style="width: 100px;margin-left:5px;" type="text"
+                                            id="datepick" name="Year" placeholder="Año" class="form-control" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"
+                                            maxlength="4">
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-8 col-md-8">
+                                        <label for="text-input" class=" form-control-label">Elige la sede en la cual matricularte:</label>
+                                    </div>
+                                    <div class="col-3 col-md-3">
+                                        <select class="selectpicker">
+                                            <option>El Tambo</option>
+                                            <option>Chilca</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+
+
 
                         </div>
 
-                        <div class="columna-izquierdaST">
-
-                            <div class=>
-                                <div class="card">
-                                    <div class="card-header">
-                                        <strong> INFORMACIÓN DE TU APODERADO</strong>
-                                    </div>
-                                    <div class="card-body card-block">
-                                        <form action="/profile/enrollment" method="POST">
-                                            <br>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="text-input" class=" form-control-label">Nombres :</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input required="" type="text" id="text-input" name="nom_tut" placeholder="Nombres" class="form-control">
-                                                    <small class="form-text text-muted">Nombres, solo letras.</small>
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="text-input" class=" form-control-label">Apellidos :</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input required="" type="text" id="text-input" name="ap_tut" placeholder="Apellidos" class="form-control">
-                                                    <small class="help-block form-text">Apellidos, solo letras.</small>
-                                                </div>
-                                            </div>
-
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="text-input" class=" form-control-label">Dirección:</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input required="" type="text" id="text-input" name="address_tut" placeholder="Dirección" class="form-control">
-                                                    <small class="form-text text-muted">Opcional.</small>
-                                                </div>
-                                            </div>
-
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="text-input" class=" form-control-label">DNI :</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input required="" maxlength="8" type="text" id="text-input" name="DNI" placeholder="DNI" class="form-control"
-                                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
-                                                    <small class="form-text text-muted">Dato Obligatorio.</small>
-                                                </div>
-                                            </div>
-
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="text-input" class=" form-control-label">Celular :</label>
-                                                </div>
-                                                <div class="col-12 col-md-9">
-                                                    <input required="" maxlength="10" type="tel" id="tel-input" name="cel_tut" placeholder="Celular" class="form-control"
-                                                    onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
-                                                    <small class="help-block form-text">Celular del Apoderado.</small>
-                                                </div>
-                                            </div>
-
-
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            
-                        </div>
-       
                     </div>
 
                 </div>
-                
-                        <div class="btn-centradoST">
-                                <button type="submit" class="btn btn-success btn-lg">
-                                    <i class="fa fa-dot-circle-o"></i> Siguiente
-                                </button>
-                                
-                        </div>
+
             </div>
 
+            <div class="columna-izquierdaST">
+
+                <div class=>
+                    <div class="card">
+                        <div class="card-header">
+                            <strong> INFORMACIÓN DE TU APODERADO</strong>
+                        </div>
+                        <div class="card-body card-block">
+                            <form action="/profile/enrollment" method="POST">
+                                <br>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-input" class=" form-control-label">Nombres :</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input required="" type="text" id="text-input" name="nom_tut" placeholder="Nombres"
+                                            class="form-control">
+                                        <small class="form-text text-muted">Nombres, solo letras.</small>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-input" class=" form-control-label">Apellidos :</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input required="" type="text" id="text-input" name="ap_tut" placeholder="Apellidos"
+                                            class="form-control">
+                                        <small class="help-block form-text">Apellidos, solo letras.</small>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-input" class=" form-control-label">Dirección:</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input required="" type="text" id="text-input" name="address_tut" placeholder="Dirección"
+                                            class="form-control">
+                                        <small class="form-text text-muted">Opcional.</small>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-input" class=" form-control-label">DNI :</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input required="" maxlength="8" type="text" id="text-input" name="DNI"
+                                            placeholder="DNI" class="form-control" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
+                                        <small class="form-text text-muted">Dato Obligatorio.</small>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-3">
+                                        <label for="text-input" class=" form-control-label">Celular :</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <input required="" maxlength="10" type="tel" id="tel-input" name="cel_tut"
+                                            placeholder="Celular" class="form-control" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
+                                        <small class="help-block form-text">Celular del Apoderado.</small>
+                                    </div>
+
+                                </div>
+
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="btn-centradoST">
+        <button type="submit" class="btn btn-success btn-lg">
+            <i class="fa fa-dot-circle-o"></i> Siguiente
+        </button>
+
+    </div>
+</div>

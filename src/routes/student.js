@@ -12,7 +12,7 @@ var idorder = "";
 
 router.get('/', isLoggedIn, (req, res) => {
     if(req.user.GroupId == 2){
-    res.render('./student/profile', {layout: 'student'});
+    res.render('./student/studentprofile', {layout: 'student'});
   }else{
     res.redirect('/admin');
   }
@@ -99,18 +99,26 @@ router.get('/account/changepassword', isLoggedIn, async (req, res) => {
     res.render('./student/changepassword', {layout: 'student'});
 });
 
-router.get('/checkout', isLoggedIn, (req, res) => {
-    res.render('./student/checkout', { layout: 'student' });
+router.get('/checkout', isLoggedIn,async (req, res) => {
+    const monto = await pool.query("SELECT ammount from static_data");
+    res.render('./student/checkout', { layout: 'student', monto: monto[0]});
 });
-var monto = 0;
+
+
 router.post('/checkout/payment.json', isLoggedIn, (req, res) => {
     monto = req.param("amount");
+    quota = req.param("quota");
+    modality = "Contado";
+    monto = Math.round(monto/3.32) + 1;
+    if(quota == 2){
+      modality = "Cuotas";
+      monto = Math.round(350/3.32) + 1;
+    };
     paypal.configure({
         'mode': 'sandbox',
         'client_id': 'AZJgR51Es2AhYDJtVZngmJDd_EB8GcPa2jeIaFiLyLX9lWBVQLI59npMSC7hMWQ7FPlAlkSu76wK9n1Z',
         'client_secret': 'EB1rnqBmer3Y79M_xH2UVrbTbrpL45DnpBY7wbfOuto1KAvQW7qif0XbQ6jppD813w31D9Gp9BdJagxJ'
 
-        
     });
     var create_payment_json = {
         "intent": "sale",
@@ -143,8 +151,6 @@ router.post('/checkout/payment.json', isLoggedIn, (req, res) => {
         if (error) {
             throw error;
         } else {
-            console.log("Create Payment Response");
-            console.log(payment);
             const newOrder = {
                 UserId: req.user.UserId,
                 date: datenow,
@@ -175,10 +181,10 @@ router.get('/checkout/success', isLoggedIn, async (req, res) => {
     await pool.query('update purchaseorders set code = ? where paypalcode = ? ', [code, token]);
 
     const enrollment = {
-      paymentmodality: "Contado",
+      paymentmodality: modality,
       date: datenow,
       price: monto,
-      nquota: 1,
+      nquota: quota,
       rate: 0.1,
       total: monto,
       UserId: req.user.UserId

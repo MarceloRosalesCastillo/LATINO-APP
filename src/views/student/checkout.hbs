@@ -15,7 +15,7 @@
                                     <span>S/.</span>
                                 </div>
                                 <div class="col">
-                                    <span>500</span>
+                                    <span>{{monto.ammount}}</span>
                                 </div>
                             </div>
                             <div class="form-group mt-5">
@@ -24,8 +24,8 @@
                                         <label for="text-input" class=" form-control-label">Cuotas:</label>
                                     </div>
                                     <div class="col-md-1">
-                                        <select class="selectpicker">
-                                            <option>1</option>
+                                        <select id="quota" class="selectpicker">
+                                            <option selected="selected">1</option>
                                             <option>2</option>
                                             
                                         </select>
@@ -107,15 +107,24 @@
 </div>
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script>
+    var str = "";
+    $( "select" ).change(function () {
+        $( "select option:selected" ).each(function() {
+         str = $( this ).text();
+         });
+    })
+  .change();
     $(document).on("ready", function(){
-        $("#pagar").on("click", function(){
+       
+    $("#pagar").on("click", function(){
             $.post("/profile/checkout/payment.json", {
-                "amount" : 500
+                "amount" : {{monto.ammount}},
+                "quota": str
             }).success(function(res){
                 window.location.href= res["object"].url;
             }).error(function(){
 
             });
-        })
+        })    
     });
 </script>
