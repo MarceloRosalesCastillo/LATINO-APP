@@ -159,8 +159,11 @@ router.post('/checkout/payment.json', isLoggedIn, (req, res) => {
       "payment_method": "paypal"
     },
     "redirect_urls": {
-      "return_url": "http://localhost:4000/profile/checkout/success",
-      "cancel_url": "http://localhost:4000/profile/checkout/cancel"
+      
+      "return_url": "http://latino.host56725a.webfactional.com/profile/checkout/success",
+      "cancel_url": "http://latino.host56725a.webfactional.com/profile/checkout/cancel"
+      // "return_url": "http://localhost:4000/profile/checkout/success",
+      // "cancel_url": "http://localhost:4000/profile/checkout/cancel"
     },
     "transactions": [{
       "item_list": {
