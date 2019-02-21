@@ -45,6 +45,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(50)
       },
+      date_quota: {
+        allowNull: true,
+        type: Sequelize.DATE
+      },
      
     });
   },

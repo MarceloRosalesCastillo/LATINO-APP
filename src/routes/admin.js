@@ -5,6 +5,7 @@ const router = express.Router();
 const pool = require('../database');
 const {isLoggedIn, isAdminLoggedIn} = require('../lib/auth');
 
+const datenow = new Date(Date.now()).toLocaleString();
 
 router.get('/', isAdminLoggedIn,async (req, res) => {
 
@@ -110,9 +111,38 @@ router.post('/add', isAdminLoggedIn, async (req, res)=>{
 
   
     router.get('/assistance', isAdminLoggedIn, async (req, res) => {
-        const students = await pool.query('select students.id, users.name, users.lastname, students.address, students.birthdate, students.phone from students INNER JOIN users on students.UserId = users.id INNER JOIN enrollments ON enrollments.UserId = users.id')
+        const students = await pool.query('select students.id, users.name, users.lastname, students.address, students.birthdate, students.phone from students INNER JOIN users on students.UserId = users.id INNER JOIN enrollments ON enrollments.UserId = users.id');
         
         res.render('admin/assistance', {layout: 'other', students});
 
+    });
+    var datefin = [];
+    router.get('/pension', isAdminLoggedIn, async (req, res) => {
+        
+        const students = await pool.query('SELECT DISTINCT students.id, users.name, users.lastname, enrollments.date, enrollments.date_quota, students.UserId from students INNER JOIN users on students.UserId = users.id INNER JOIN enrollments ON enrollments.UserId = users.id where enrollments.paymentmodality = "Cuotas" order by students.id desc');
+        
+        res.render('admin/pensions', {layout: 'other', students});
+
+    });
+
+    router.get('/cancelorder/:id_student', isAdminLoggedIn, async (req, res)=>{
+        const {id_student} = req.params;
+        const enrollment = {
+            paymentmodality: "Contado",
+            date: datenow,
+            price: 350,
+            nquota: 2,
+            rate: 0.1,
+            total: 700,
+            UserId: id_student
+        
+          };
+          console.log(enrollment);
+        await pool.query('UPDATE enrollments set paymentmodality = "Contado" WHERE UserId = ?', [id_student]);
+        await pool.query('INSERT INTO enrollments set ?', [enrollment]);
+        
+        
+       // req.flash('success', 'Estudiante eliminado satisfactoriamente');
+        res.redirect('/admin/pension')
     });
 module.exports = router;

@@ -243,20 +243,27 @@ router.get('/checkout/success', isLoggedIn, async (req, res) => {
   const enrollment = {
     paymentmodality: modality,
     date: datenow,
-    price: monto,
+    price: monto * 3.32,
     nquota: quota,
     rate: 0.1,
-    total: monto,
+    total: monto * 3.32,
     UserId: req.user.UserId
 
   };
 
   e = await pool.query('INSERT INTO enrollments set ?', [enrollment]);
   var iden = e.insertId;
-
+  if(quota == 2){
+        try {
+          await pool.query("update enrollments set date_quota = date_add(?, interval 30 day) where id = ?", [datenow, iden]);
+        } catch (error) {
+          console.log("gg esta mrda");
+        }
+      }
+  //update enrollments set date_quota = date_add('2019-02-21 12:42:05', interval 30 day) where id = 6
   const detailsorden = {
     concept: "Matricula",
-    price: monto,
+    price: monto * 3.32,
     PurchaseOrderId: idorder,
     EnrollmentId: iden
 
