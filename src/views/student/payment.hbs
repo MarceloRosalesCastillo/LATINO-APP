@@ -1,102 +1,80 @@
-<div class="container" style="margin-top: 50px">
-    <div class="row h-100 justify-content-center align-items-center mb-5">
-        <article class="card" style="width:40%">
-            <div class="card-body p-5">
-                <h1 style="text-align: center;">DETALLES</h1>
-                <br>
-                <div class="form-group">
-                    <div class="form-row" style="align:right;">
-                        <div class="col-md-9">
-                            <label for="text-input" class=" form-control-label">Monto:</label>
-                        </div>
-                        <div class="col-md-1">
-                            <span>S/.</span>
-                        </div>
-                        <div class="col">
-                            <span>500</span>
-                        </div>
-                    </div>
-                    <div class="form-group mt-5">
-                        <div class="form-row" style="align:right;">
-                            <div class="col-md-10   ">
-                                <label for="text-input" class=" form-control-label">Cuotas:</label>
-                            </div>
-                            <div class="col-md-1">
-                                <select class="selectpicker">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                    <option>6</option>
-                                </select>
 
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-        </article>
-    </div>
-
-    <div class="row h-100 justify-content-center align-items-center mb-5">
-        <article class="card" style="width:40%">
-            <div class="card-body p-5">
-
-                <h1 style="text-align: center;">PAGO</h1>
-                <br>
-                <p style="text-align: center;"> <img src="/img/payment/visa.png">
-                    <img src="/img/payment/mc.png">
-                    <img src="/img/payment/diners.png">
-                    <img src="/img/payment/amex.png"> </p>
-                <br>
-                <form role="form">
-                    <div class="form-group">
-                        <label for="username">Nombre Completo del Titular</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-user"></i></span>
-                            </div>
-                            <input type="text" class="form-control" name="username" placeholder="" required="">
-                        </div> <!-- input-group.// -->
-                    </div> <!-- form-group.// -->
-
-                    <div class="form-group">
-                        <label for="cardNumber">Número de tarjeta</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
-                            </div>
-                            <input type="text" class="form-control" name="cardNumber" placeholder="">
-                        </div> <!-- input-group.// -->
-                    </div> <!-- form-group.// -->
-
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <div class="form-group">
-                                <label><span class="hidden-xs">Expiración</span> </label>
-                                <div class="form-inline">
-                                    <input class="form-control" style="width:45%">
-                                    </input>
-                                    <span style="width:10%; text-align: center"> / </span>
-                                    <input class="form-control" style="width:45%">
-                                    </input>
+    <div class="page-wrapper">
+        <div class="page-container2" >
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                  {{> messages}}
+                     <div class="container-fluid">
+                         <div class="row">
+                                                     
+                            <div class="col-md-12">
+        
+                                <h3 class="title-5 m-b-35">Control de pensiones</h3>
+                                
+                                <div class="table-responsive table-responsive-data2">
+                                    <table class="table table-data2">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <label class="au-checkbox">
+                                                        <input type="checkbox">
+                                                        <span class="au-checkmark"></span>
+                                                    </label>
+                                                </th>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Lastname</th>
+                                                <th>date</th>
+                                                <th>Address</th>
+                                                <th>Phone</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        {{#each students}}
+                                        <tbody>
+                                            <tr class="tr-shadow">
+                                                <td>
+                                                    <label class="au-checkbox">
+                                                        <input type="checkbox">
+                                                        <span class="au-checkmark"></span>
+                                                    </label>
+                                                </td>
+                                                <td>{{id}}</td>
+                                                <td>
+                                                    <span class="block-email" style="color: #04ac4a;">{{name}}</span>
+                                                </td>
+                                                <td class="desc">{{lastname}}</td>
+                                                <td>{{dateFormat date}} </td>
+                                                <td>{{dateFormat date_quota}}</td>                                               </td>
+                                                <td>{{phone}}</td>
+                                                <td>
+                                                    <div class="table-data-feature">
+                                                        <button onclick="window.location.href='/admin/cancelorder/{{UserId}}'" class="item" data-toggle="tooltip" data-placement="top" title="Cancelar">
+                                                            <i class="zmdi zmdi-mail-send"></i>
+                                                        </button>
+                                                        <button onclick="window.location.href='/admin/edit/{{id}}'" class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                            <i class="zmdi zmdi-edit"></i>
+                                                        </button>
+                                                        <button onclick="window.location.href='/admin/delete/{{id}}'" class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                            <i class="zmdi zmdi-delete"></i>
+                                                        </button>
+                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="More">
+                                                            <i class="zmdi zmdi-more"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="spacer"></tr>
+                                            </tbody>
+                                            {{/each}}
+                                    </table>
                                 </div>
+                                <!-- END DATA TABLE -->
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV
-                                    <i class="fa fa-question-circle"></i></label>
-                                <input class="form-control" required="" type="text">
-                            </div> <!-- form-group.// -->
-                        </div>
-                    </div> <!-- row.// -->
-                    <button class="subscribe btn btn-primary btn-block" type="button"> Confirmar </button>
-                </form>
-            </div> <!-- card-body.// -->
-        </article> <!-- card.// -->
-    </div>
+       
+                    </div>
 
-</div>
+                </div>
+            </div>
+

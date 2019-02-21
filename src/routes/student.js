@@ -79,8 +79,10 @@ router.get('/assistance', isLoggedIn, async (req, res) => {
 
 });
 
-router.get('/payment', isLoggedIn, (req, res) => {
-  res.render('./student/payment', { layout: 'student' });
+router.get('/payment', isLoggedIn, async (req, res) => {
+   
+  const students = await pool.query('SELECT DISTINCT students.id, users.name, users.lastname, enrollments.date, enrollments.date_quota, students.UserId from students INNER JOIN users on students.UserId = users.id INNER JOIN enrollments ON enrollments.UserId = users.id where enrollments.paymentmodality = "Cuotas" and users.id= ? order by students.id desc', [req.user.UserId]);
+   res.render('./student/payment', { layout: 'student', students});
 });
 
 router.get('/account', isLoggedIn, async (req, res) => {
