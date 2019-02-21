@@ -4,7 +4,13 @@
             <form>
                 <article class="card">
                     <div class="card-body p-5">
-                        <h1 style="text-align: center;">DETALLES</h1>
+                        <h1 style="text-align: center;">MÉTODO DE PAGO</h1>
+                        <br>
+                        <p style="text-align: center;"> <img src="/img/payment/visa.png">
+                            <img src="/img/payment/mc.png">
+                            <img src="/img/payment/diners.png">
+                            <img src="/img/payment/amex.png"> </p>
+                        <br>
                         <br>
                         <div class="form-group">
                             <div class="form-row" style="align:right;">
@@ -27,11 +33,16 @@
                                         <select id="quota" class="selectpicker">
                                             <option selected="selected">1</option>
                                             <option>2</option>
-                                            
+
                                         </select>
 
                                     </div>
-                                    <button id="pagar" class="subscribe btn btn-primary btn-block" type="button"> PAGAR
+                                    <button style="margin-top:20px;" id="pagar" class="subscribe btn btn-warning btn-block"
+                                        type="button">
+                                        PAGAR POR PAYPAL
+                                    </button>
+                                    <button id="pagarsede" class="subscribe btn btn-primary btn-block" type="button">
+                                        PAGAR EN SEDE
                                     </button>
 
                                 </div>
@@ -43,88 +54,46 @@
 
         </div>
 
-        {{!-- <div class="col-md-6">
-        <article class="card">
-            <div class="card-body p-5">
-    
-                <h1 style="text-align: center;">PAGO</h1>
-                <br>
-                <p style="text-align: center;"> <img src="/img/payment/visa.png">
-                    <img src="/img/payment/mc.png">
-                    <img src="/img/payment/diners.png">
-                    <img src="/img/payment/amex.png"> </p>
-                <br>
-                <form role="form">
-                    <div class="form-group">
-                        <label for="username">Nombre Completo del Titular</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-user"></i></span>
-                            </div>
-                            <input type="text" class="form-control" name="username" placeholder="" required="">
-                        </div> <!-- input-group.// -->
-                    </div> <!-- form-group.// -->
-    
-                    <div class="form-group">
-                        <label for="cardNumber">Número de tarjeta</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
-                            </div>
-                            <input type="text" class="form-control" name="cardNumber" placeholder="">
-                        </div> <!-- input-group.// -->
-                    </div> <!-- form-group.// -->
-    
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <div class="form-group">
-                                <label><span class="hidden-xs">Expiración</span> </label>
-                                <div class="form-inline">
-                                    <input class="form-control" style="width:45%">
-                                    </input>
-                                    <span style="width:10%; text-align: center"> / </span>
-                                    <input class="form-control" style="width:45%">
-                                    </input>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label data-toggle="tooltip" title=""
-                                    data-original-title="3 digits code on back side of the card">CVV
-                                    <i class="fa fa-question-circle"></i></label>
-                                <input class="form-control" required="" type="text">
-                            </div> <!-- form-group.// -->
-                        </div>
-                    </div> <!-- row.// -->
-                    <button class="subscribe btn btn-primary btn-block" type="button"> Confirmar </button>
-                </form>
-            </div> <!-- card-body.// -->
-        </article> <!-- card.// -->
-    </div> --}}
-
     </div>
+
+</div>
 </div>
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script>
+
     var str = "";
-    $( "select" ).change(function () {
-        $( "select option:selected" ).each(function() {
-         str = $( this ).text();
-         });
+    $("select").change(function () {
+        $("select option:selected").each(function () {
+            str = $(this).text();
+        });
     })
-  .change();
-    $(document).on("ready", function(){
-       
-    $("#pagar").on("click", function(){
+        .change();
+    $(document).on("ready", function () {
+
+        $("#pagar").on("click", function () {
             $.post("/profile/checkout/payment.json", {
-                "amount" : {{monto.ammount}},
-                "quota": str
-            }).success(function(res){
-                window.location.href= res["object"].url;
-            }).error(function(){
+                "amount": {{ monto.ammount }},
+            "quota": str
+            }).success(function (res) {
+                window.location.href = res["object"].url;
+            }).error(function () {
 
             });
         })    
     });
+
+    $(document).on("ready", function () {
+
+        $("#pagarsede").on("click", function () {
+            $.post("/profile/checkout/sedesuccess.json", {
+                "amount": {{ monto.ammount }},
+                "quota": str
+            }).success(function (res) {
+                window.location.href = res["object"].url;
+            }).error(function () {
+
+            });
+        })    
+    });
+
 </script>

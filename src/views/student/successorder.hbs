@@ -1,5 +1,5 @@
-<div class="row">
-    <div class="container" style="margin-top: 50px">
+<div class="row h-100 justify-content-center align-items-center mb-5 " style="margin-top:100px;">
+   
         <div class="col-md-6">
 
             <article class="card">
@@ -13,17 +13,17 @@
                         <img src="/img/payment/amex.png"> </p>
                     <br>
 
-                    <h1>MATRICULA EXITOSA</h1>
-                    <h3>CODIGO DE COMPROBANTE </h3>
-                    <h3 id="vacio">{{order.code}}</h3>
+                    <h1 style="text-align: center; margin-bottom:50px;">MATRICULA EXITOSA</h1>
+                    <h3>REVISE SU EMAIL PARA MÁS DETALLES</h3>
+                    
                 </div>
+                
+                <a class="main-button icon-button" style="text-align: center;" href="/profile">Continuar</a>
             </article>
 
-        </div>
+        
     </div>
 </div>
 <script>
-    if ($("#vacio").html() == "")
-        window.location.reload();
-    
+     window.history.forward();
 </script>

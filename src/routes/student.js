@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const { isLoggedIn, isNotLoggedIn }= require('../lib/auth');
+const { isLoggedIn, isNotLoggedIn } = require('../lib/auth');
 const pool = require('../database');
 const helpers = require('../lib/helpers');
 const nodemailer = require("nodemailer");
@@ -10,224 +10,284 @@ const paypal = require('paypal-rest-sdk')
 const datenow = new Date(Date.now()).toLocaleString();
 var idorder = "";
 
-router.get('/', isLoggedIn, (req, res) => {
-    if(req.user.GroupId == 2){
-    res.render('./student/studentprofile', {layout: 'student'});
-  }else{
+router.get('/', isLoggedIn, async (req, res) => {
+  o = await pool.query("SELECT status, date FROM enrollments WHERE UserId = ? ORDER BY date DESC", [req.user.UserId]);
+
+  if (req.user.GroupId == 2 && (o.length <= 0 || o[0].status == "OFF")) {
+    res.render('./student/studentprofile', { layout: 'student' });
+  } else if (req.user.GroupId == 2 && o[0].status == "ON") {
+    res.render('./student/studentprofile', { layout: 'studentenrollment' });
+  } else {
     res.redirect('/admin');
   }
 });
 
 
 router.get('/enrollment', isLoggedIn, (req, res) => {
-    res.render('./student/enrollment', {layout: 'student'});
+  res.render('./student/enrollment', { layout: 'student' });
 });
 
 
-router.post('/enrollment', isLoggedIn, async (req, res)=>{
-    const {student_dni, studentaddress, studentphone, Day, Month, Year,
-        nom_tut, ap_tut, address_tut, DNI, cel_tut} = req.body;
-   // const {name, lastname, address, phone, age} = req.body;
-    const newUser = {
-        dni: student_dni,
-        phone: studentphone,
-        birthdate: Year + "-" + Month + "-" + Day,
-        address: studentaddress,
-        UserId: req.user.UserId
-    };
-    const newTutor = {
-        //student_id: id_student,
-        tutorname: nom_tut,
-        tutorlastname: ap_tut,
-        tutoraddress: address_tut,
-        dni: DNI,
-        tutorphone: cel_tut
-    };
-    //console.log(newUser);
-    id = await pool.query('INSERT INTO students set ?', [newUser]);
-    newTutor.StudentId = id.insertId;
-    await pool.query('INSERT INTO tutors set ?', [newTutor]);
+router.post('/enrollment', isLoggedIn, async (req, res) => {
+  const { student_dni, studentaddress, studentphone, Day, Month, Year,
+    nom_tut, ap_tut, address_tut, DNI, cel_tut } = req.body;
+  // const {name, lastname, address, phone, age} = req.body;
+  const newUser = {
+    dni: student_dni,
+    phone: studentphone,
+    birthdate: Year + "-" + Month + "-" + Day,
+    address: studentaddress,
+    UserId: req.user.UserId
+  };
+  const newTutor = {
+    //student_id: id_student,
+    tutorname: nom_tut,
+    tutorlastname: ap_tut,
+    tutoraddress: address_tut,
+    dni: DNI,
+    tutorphone: cel_tut
+  };
+  //console.log(newUser);
+  id = await pool.query('INSERT INTO students set ?', [newUser]);
+  newTutor.StudentId = id.insertId;
+  await pool.query('INSERT INTO tutors set ?', [newTutor]);
 
-    req.flash('success', 'Estudiante registrado satisfactoriamente');
-    res.redirect('/profile/checkout');
+  req.flash('success', 'Estudiante registrado satisfactoriamente');
+  res.redirect('/profile/checkout');
 
 });
 
-router.get('/schedule', isLoggedIn, (req, res) => {
-    res.render('./student/schedule', {layout: 'student'});
+router.get('/schedule', isLoggedIn, async (req, res) => {
+  o = await pool.query("SELECT status, date FROM enrollments WHERE UserId = ? ORDER BY date DESC", [req.user.UserId]);
+
+  if (req.user.GroupId == 2 && (o.length <= 0 || o[0].status == "OFF")) {
+    res.render('./student/schedule', { layout: 'student' });
+  } else {
+    res.render('./student/schedule', { layout: 'studentenrollment' });
+  }
+
 });
 
-router.get('/assistance', isLoggedIn, (req, res) => {
-    res.render('./student/assitance_student', {layout: 'student'});
+router.get('/assistance', isLoggedIn, async (req, res) => {
+  o = await pool.query("SELECT status, date FROM enrollments WHERE UserId = ? ORDER BY date DESC", [req.user.UserId]);
+
+  if (req.user.GroupId == 2 && (o.length <= 0 || o[0].status == "OFF")) {
+    res.render('./student/assitance_student', { layout: 'student' });
+  } else {
+    res.render('./student/assitance_student', { layout: 'studentenrollment' });
+  }
+
 });
 
 router.get('/payment', isLoggedIn, (req, res) => {
-    res.render('./student/payment', {layout: 'student'});
+  res.render('./student/payment', { layout: 'student' });
 });
 
 router.get('/account', isLoggedIn, async (req, res) => {
 
-    const students = await pool.query('select * from students INNER JOIN tutors on students.id = tutors.id where UserId = ?', [req.user.UserId]);
-    
-    res.render('./student/account', {layout: 'student', students: students[0]});
+  const students = await pool.query('select * from students INNER JOIN tutors on students.id = tutors.id where UserId = ?', [req.user.UserId]);
+  o = await pool.query("SELECT status, date FROM enrollments WHERE UserId = ? ORDER BY date DESC", [req.user.UserId]);
+
+  if (req.user.GroupId == 2 && (o.length <= 0 || o[0].status == "OFF")) {
+    res.render('./student/account', { layout: 'student', students: students[0] });
+  } else {
+    res.render('./student/account', { layout: 'studentenrollment', students: students[0] });
+  }
+
 });
 
 router.post('/account', isLoggedIn, async (req, res) => {
-    
-    const {name, lastname, email, username} = req.body;
-   // const {name, lastname, address, phone, age} = req.body;
-    const newUser = {
-        name,
-        lastname,
-        email,
-        username
-    };
-    var address = req.param("address");
-    pool.query("Update users set ? where id = ? ", [newUser, req.user.UserId]);
-    pool.query("Update students set address = ? where UserId = ? ", [address, req.user.UserId]);
-    res.redirect('/profile');
+
+  const { name, lastname, email, username } = req.body;
+  // const {name, lastname, address, phone, age} = req.body;
+  const newUser = {
+    name,
+    lastname,
+    email,
+    username
+  };
+  var address = req.param("address");
+  pool.query("Update users set ? where id = ? ", [newUser, req.user.UserId]);
+  pool.query("Update students set address = ? where UserId = ? ", [address, req.user.UserId]);
+  res.redirect('/profile');
 });
 
 router.post('/account/pass', isLoggedIn, async (req, res) => {
-    
-    const pass = req.param("newpass");
-    const enpass = await helpers.encryptPassword(pass);
-    await pool.query("Update users set password = ? where id = ? ", [enpass, req.user.UserId]);
-    res.redirect('/profile');
+
+  const pass = req.param("newpass");
+  const enpass = await helpers.encryptPassword(pass);
+  await pool.query("Update users set password = ? where id = ? ", [enpass, req.user.UserId]);
+  res.redirect('/profile');
 });
 router.get('/account/changepassword', isLoggedIn, async (req, res) => {
-    res.render('./student/changepassword', {layout: 'student'});
+  o = await pool.query("SELECT status, date FROM enrollments WHERE UserId = ? ORDER BY date DESC", [req.user.UserId]);
+
+  if (req.user.GroupId == 2 && (o.length <= 0 || o[0].status == "OFF")) {
+    res.render('./student/changepassword', { layout: 'student' });
+  } else {
+    res.render('./student/changepassword', { layout: 'studentenrollment' });
+  }
+
 });
 
-router.get('/checkout', isLoggedIn,async (req, res) => {
-    const monto = await pool.query("SELECT ammount from static_data");
-    res.render('./student/checkout', { layout: 'student', monto: monto[0]});
+router.get('/checkout', isLoggedIn, async (req, res) => {
+  const monto = await pool.query("SELECT ammount from static_data");
+  res.render('./student/checkout', { layout: 'student', monto: monto[0] });
 });
 
 
 router.post('/checkout/payment.json', isLoggedIn, (req, res) => {
-    monto = req.param("amount");
-    quota = req.param("quota");
-    modality = "Contado";
-    monto = Math.round(monto/3.32) + 1;
-    if(quota == 2){
-      modality = "Cuotas";
-      monto = Math.round(350/3.32) + 1;
-    };
-    paypal.configure({
-        'mode': 'sandbox',
-        'client_id': 'AZJgR51Es2AhYDJtVZngmJDd_EB8GcPa2jeIaFiLyLX9lWBVQLI59npMSC7hMWQ7FPlAlkSu76wK9n1Z',
-        'client_secret': 'EB1rnqBmer3Y79M_xH2UVrbTbrpL45DnpBY7wbfOuto1KAvQW7qif0XbQ6jppD813w31D9Gp9BdJagxJ'
+  monto = req.param("amount");
+  quota = req.param("quota");
+  modality = "Contado";
+  monto = Math.round(monto / 3.32) + 1;
+  if (quota == 2) {
+    modality = "Cuotas";
+    monto = Math.round(350 / 3.32) + 1;
+  };
+  paypal.configure({
+    'mode': 'sandbox',
+    'client_id': 'AZJgR51Es2AhYDJtVZngmJDd_EB8GcPa2jeIaFiLyLX9lWBVQLI59npMSC7hMWQ7FPlAlkSu76wK9n1Z',
+    'client_secret': 'EB1rnqBmer3Y79M_xH2UVrbTbrpL45DnpBY7wbfOuto1KAvQW7qif0XbQ6jppD813w31D9Gp9BdJagxJ'
 
-    });
-    var create_payment_json = {
-        "intent": "sale",
-        "payer": {
-            "payment_method": "paypal"
-        },
-        "redirect_urls": {
-            "return_url": "http://localhost:4000/profile/checkout/success",
-            "cancel_url": "http://localhost:4000/profile/checkout/cancel"
-        },
-        "transactions": [{
-            "item_list": {
-                "items": [{
-                    "name": "item",
-                    "sku": "item",
-                    "price": monto,
-                    "currency": "USD",
-                    "quantity": 1
-                }]
-            },
-            "amount": {
-                "currency": "USD",
-                "total": monto
-            },
-            "description": "This is the payment description."
+  });
+  var create_payment_json = {
+    "intent": "sale",
+    "payer": {
+      "payment_method": "paypal"
+    },
+    "redirect_urls": {
+      "return_url": "http://localhost:4000/profile/checkout/success",
+      "cancel_url": "http://localhost:4000/profile/checkout/cancel"
+    },
+    "transactions": [{
+      "item_list": {
+        "items": [{
+          "name": "item",
+          "sku": "item",
+          "price": monto,
+          "currency": "USD",
+          "quantity": 1
         }]
-    };
+      },
+      "amount": {
+        "currency": "USD",
+        "total": monto
+      },
+      "description": "This is the payment description."
+    }]
+  };
 
-    paypal.payment.create(create_payment_json, async function (error, payment) {
-        if (error) {
-            throw error;
-        } else {
-            const newOrder = {
-                UserId: req.user.UserId,
-                date: datenow,
-                paypalcode: payment.id
-            }
-            o = await pool.query("INSERT INTO purchaseorders set ?", [newOrder]);
-            idorder = o.insertId;
+  paypal.payment.create(create_payment_json, async function (error, payment) {
+    if (error) {
+      throw error;
+    } else {
+      const newOrder = {
+        UserId: req.user.UserId,
+        date: datenow,
+        paypalcode: payment.id
+      }
+      o = await pool.query("INSERT INTO purchaseorders set ?", [newOrder]);
+      idorder = o.insertId;
 
-            Link = payment.links[1].href;
-            console.log(Link);
-            res.json({
-                object: {
-                    url: Link
-                },
-                status: true,
-            
-            });            
-        }
+      Link = payment.links[1].href;
+      console.log(Link);
+      res.json({
+        object: {
+          url: Link
+        },
+        status: true,
+
+      });
+    }
+  });
+
+});
+variable = 0;
+router.post('/checkout/sedesuccess.json', isLoggedIn, async (req, res) => {
+  
+   const newOrder = {
+      UserId: req.user.UserId,
+      date: datenow,
+      paypalcode: "sede",
+      code: code,
+    }
+    order = await pool.query("INSERT INTO purchaseorders set ?", [newOrder]);
+    var code = "LATINO-000" +  order.insertId;
+    variable = order.insertId;
+    await pool.query("UPDATE purchaseorders set code = ? where id = ?", [code, order.insertId]);
+
+    res.json({
+      object: {
+        url: "http://localhost:4000/profile/checkout/sedesuccess"
+      },
+      status: true,
+
     });
-    
+  
+});
+
+router.get('/checkout/sedesuccess', isLoggedIn, async (req, res) => {
+  const order = await pool.query('select * from purchaseorders where id = ? ', [variable]);
+  console.log(order);
+  res.render('./student/sedepayment', { layout: 'studentenrollment', order: order[0] });
 });
 
 router.get('/checkout/success', isLoggedIn, async (req, res) => {
 
-    const token = req.query["paymentId"];
-    const order = await pool.query('select * from purchaseorders where paypalcode = ? ', [token]);
-    var code = "LATINO-000" + order[0].id;
-    await pool.query('update purchaseorders set code = ? where paypalcode = ? ', [code, token]);
+  const token = req.query["paymentId"];
+  const order = await pool.query('select * from purchaseorders where paypalcode = ? ', [token]);
+  var code = "LATINO-000" + order[0].id;
+  await pool.query('update purchaseorders set code = ? where paypalcode = ? ', [code, token]);
 
-    const enrollment = {
-      paymentmodality: modality,
-      date: datenow,
-      price: monto,
-      nquota: quota,
-      rate: 0.1,
-      total: monto,
-      UserId: req.user.UserId
+  const enrollment = {
+    paymentmodality: modality,
+    date: datenow,
+    price: monto,
+    nquota: quota,
+    rate: 0.1,
+    total: monto,
+    UserId: req.user.UserId
 
-    };
-   
-    e = await pool.query('INSERT INTO enrollments set ?', [enrollment]);
-    var iden = e.insertId;
+  };
 
-    const detailsorden = {
-      concept: "Matricula",
-      price: monto,
-      PurchaseOrderId: idorder,
-      EnrollmentId: iden
+  e = await pool.query('INSERT INTO enrollments set ?', [enrollment]);
+  var iden = e.insertId;
 
-    };
-    await pool.query('insert into purchaseorderdetails set ?', [detailsorden]);
+  const detailsorden = {
+    concept: "Matricula",
+    price: monto,
+    PurchaseOrderId: idorder,
+    EnrollmentId: iden
+
+  };
+  await pool.query('insert into purchaseorderdetails set ?', [detailsorden]);
 
 
 
-    let transporter = nodemailer.createTransport({
-        host: "smtp.webfaction.com",
-        port: 25,
-        secure: false, // true for 465, false for other ports
-        auth: {
-          user: 'latino_mailbox_host56725a', // generated ethereal user
-          pass: 'host56725@mail@latino1' // generated ethereal password
-        }
-      });
+  let transporter = nodemailer.createTransport({
+    host: "smtp.webfaction.com",
+    port: 25,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: 'latino_mailbox_host56725a', // generated ethereal user
+      pass: 'host56725@mail@latino1' // generated ethereal password
+    }
+  });
 
-      var rand=Math.floor((Math.random() * 100) + 54);
-      var host='local'//req.get('host');
-      var link="http://"+host+"/verify?id="+rand;
-      let mailOptions = {
-        from: '"CONFIMACION DE PAGO ACADEMIA LATINO" <rrojasen@continental.edu.pe>', // sender address
-        to: req.user.email, // list of receivers
-        subject: "Orden", // Subject line
-        html: mailHTML( req.user.name, 'matricularte con nosotros', datenow, code, 'Fecha de transaccion', monto, monto, monto, 'http://localhost:4000/contact')	 // html body
-      };
+  var rand = Math.floor((Math.random() * 100) + 54);
+  var host = 'local'//req.get('host');
+  var link = "http://" + host + "/verify?id=" + rand;
+  let mailOptions = {
+    from: '"CONFIMACION DE PAGO ACADEMIA LATINO" <rrojasen@continental.edu.pe>', // sender address
+    to: req.user.email, // list of receivers
+    subject: "Orden", // Subject line
+    html: mailHTML(req.user.name, 'matricularte con nosotros', datenow, code, 'Fecha de transaccion', monto, monto, monto, 'http://localhost:4000/contact')	 // html body
+  };
 
-      let info = transporter.sendMail(mailOptions);
+  let info = transporter.sendMail(mailOptions);
 
-      res.render('./student/successorder', { layout: 'student', order: order[0]});
+  res.render('./student/successorder', { layout: 'studentenrollment', order: order[0] });
 
 
 
@@ -235,17 +295,17 @@ router.get('/checkout/success', isLoggedIn, async (req, res) => {
 });
 
 router.get('/checkout/cancel', isLoggedIn, async (req, res) => {
-    const token = req.query["token"];
-    console.log(token);
-    const order = await pool.query('select * from purchaseorders where paypalcode = ? ', [token]);
-    // res.render('./student/cancelorder', {layout: 'other', students: order[0]});
-    console.log(order);
-    res.render('./student/cancelorder', { layout: 'student', order: order[0]});
+  const token = req.query["token"];
+  console.log(token);
+  const order = await pool.query('select * from purchaseorders where paypalcode = ? ', [token]);
+  // res.render('./student/cancelorder', {layout: 'other', students: order[0]});
+  console.log(order);
+  res.render('./student/cancelorder', { layout: 'student', order: order[0] });
 });
 
 
-function mailHTML(_name, _reason, _date, _description, _invoice, _amount , _subamount, _total, _url) {
-    var _html_ = '<html><head>\
+function mailHTML(_name, _reason, _date, _description, _invoice, _amount, _subamount, _total, _url) {
+  var _html_ = '<html><head>\
     <meta name="viewport" content="width=device-width, initial-scale=1.0">\
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">\
     <title>Please pay total_Value due by due_date_Value</title>\
@@ -345,5 +405,5 @@ function mailHTML(_name, _reason, _date, _description, _invoice, _amount , _suba
     </tbody></table>\
   </body></html>';
   return _html_;
-  }
+}
 module.exports = router;

@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     nquota: DataTypes.INTEGER,
     rate: DataTypes.DECIMAL,
     total: DataTypes.DECIMAL,
+    status: DataTypes.STRING(50)
     
   }, {});
   Enrollment.associate = function(models) {

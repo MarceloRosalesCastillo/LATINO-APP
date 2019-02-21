@@ -41,6 +41,10 @@ module.exports = {
           key: 'id'
         }
       },
+      status: {
+        allowNull: false,
+        type: Sequelize.STRING(50)
+      },
      
     });
   },
@@ -48,3 +52,4 @@ module.exports = {
     return queryInterface.dropTable('Enrollments');
   }
 };
+//CREATE EVENT control_enrollment ON SCHEDULE EVERY 1 DAY DO UPDATE enrollments SET status= "off" WHERE date <= DATE_SUB(CURDATE(), INTERVAL 90 DAY)

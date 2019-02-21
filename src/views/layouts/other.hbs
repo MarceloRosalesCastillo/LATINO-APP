@@ -104,10 +104,25 @@
                     </div>
                     <nav class="navbar-sidebar2">
                         <ul class="list-unstyled navbar__list">
-                            <li>
-                                <a href="/admin/list">
-                                    <i class="fas fa-users"></i>Estudiantes</a>
-                            </li>
+                            <li class="active has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-users"></i>Estudiantes
+                                <span class="arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </span>
+                            </a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="/admin/list">
+                                        <i class="fas fa-user"></i>Matriculados</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/prelist">
+                                        <i class="fas fa-address-book"></i>Pre Matriculados</a>
+                                </li>
+                                
+                            </ul>
+                        </li>
                             
                             <li>
                                 <a href="">
@@ -116,7 +131,7 @@
                             </li>
 
                             <li class="has-sub">
-                                <a class="js-arrow" href="#">
+                                <a href="/admin/assistance">
                                     <i class="far fa-calendar-check"></i>Asistencia
                                     
                                 </a>
