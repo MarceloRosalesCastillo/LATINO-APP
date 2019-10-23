@@ -26,12 +26,14 @@ app.engine('.hbs', exphbs({
  
   
 //middlewares
+var sessionStore = new MYSQLStore(database);
 app.use(session({
     secret: 'latino',
     resave: false,
     saveUninitialized: false,
-    store: new MYSQLStore(database)
+    store: sessionStore
 })); 
+
 app.use(flash());
 app.use(morgan("dev"));
 app.use(express.urlencoded({extended: false}));

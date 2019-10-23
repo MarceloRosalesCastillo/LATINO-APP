@@ -160,10 +160,10 @@ router.post('/checkout/payment.json', isLoggedIn, (req, res) => {
     },
     "redirect_urls": {
       
-      // "return_url": "http://latino.host56725a.webfactional.com/profile/checkout/success",
-      // "cancel_url": "http://latino.host56725a.webfactional.com/profile/checkout/cancel"
-      "return_url": "http://localhost:4000/profile/checkout/success",
-      "cancel_url": "http://localhost:4000/profile/checkout/cancel"
+      "return_url": "https://latino-app.herokuapp.com/profile/checkout/success",
+      "cancel_url": "https://latino-app.herokuapp.com/profile/checkout/cancel"
+      // "return_url": "http://localhost:4000/profile/checkout/success",
+      // "cancel_url": "http://localhost:4000/profile/checkout/cancel"
     },
     "transactions": [{
       "item_list": {
