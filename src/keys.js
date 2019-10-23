@@ -1,26 +1,22 @@
-// module.exports = {
+module.exports = {
 
-//     database:{
+    // database:{
 
-//         host: 'localhost',
-//         user: 'root',
-//         password: null,
-//         database: 'db_latino',
+    //     host: 'localhost',
+    //     user: 'root',
+    //     password: null,
+    //     database: 'db_latino',
         
 
-//     }
-
-
-// }
-module.exports = {
+    // }
 
     database:{
 
-        host: 'https://web520.webfaction.com/phpMyAdmin',
-        port: 3306,
-        user: 'latino_host56725',
-        password: 'host56725@latino1',
-        database: 'latino_host56725a',
+        host: 'bpnkqsonwy6i3qbzomwv-mysql.services.clever-cloud.com',
+        user: 'uacuhdgjar69avfs',
+        password: 'IaYrBXdgfOj3kAmeunN6',
+        database: 'bpnkqsonwy6i3qbzomwv',
+        port: 3306
         
 
     }

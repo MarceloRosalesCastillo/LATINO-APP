@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       ruc: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
       },
       UserId:{

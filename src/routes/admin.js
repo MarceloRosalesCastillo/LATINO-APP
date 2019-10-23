@@ -50,7 +50,7 @@ router.post('/add', isAdminLoggedIn, async (req, res)=>{
 
 });
     router.get('/list', isAdminLoggedIn, async (req, res)=>{
-        const students = await pool.query('select students.id, users.name, users.lastname, students.address, students.birthdate, students.phone from students INNER JOIN users on students.UserId = users.id INNER JOIN enrollments ON enrollments.UserId = users.id');
+        const students = await pool.query('select students.id, users.name, users.lastname, students.address, students.birthdate, students.phone from students INNER JOIN users on students.UserId = users.id INNER JOIN enrollments ON enrollments.UserId = users.id where enrollments.status = "ON"');
         res.render('admin/list',{layout: 'other', students}); 
         
     });

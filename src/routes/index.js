@@ -37,6 +37,7 @@ var data = {};
 
 router.get('/authentication', isLoggedIn, (req, res) => {
     data = req.user;
+    console.log(data);
     req.logOut();
     res.render('./student/authentication');
 });

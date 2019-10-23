@@ -3,7 +3,8 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const pool = require('../database');
 const helpers = require('../lib/helpers');
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
+const postmark = require("postmark");
 
 passport.use('local.signin', new LocalStrategy({
     usernameField: 'email',
@@ -15,7 +16,6 @@ passport.use('local.signin', new LocalStrategy({
         const user = rows[0];
         const validPassword = await helpers.matchPassword(password, user.password);
         if(validPassword && user.authentication == "TRUE"){
-
             done(null, user, req.flash('success', 'Welcome' + user.username));
         }else if(user.authentication == "FALSE"){
             done(null, false, req.flash('message' ,'Cuenta no Verificada'));
@@ -60,30 +60,31 @@ passport.use('local.signup', new LocalStrategy({
         }
         await pool.query('INSERT INTO usergroups SET ?', [newUserGroup]);
     
-    
-        let transporter = nodemailer.createTransport({
-            host: "smtp.webfaction.com",
-            port: 25,
-            secure: false, // true for 465, false for other ports
-            auth: {
-              user: 'latino_mailbox_host56725a', // generated ethereal user
-              pass: 'host56725@mail@latino1' // generated ethereal password
-            }
-          });
+        var client = new postmark.ServerClient("df3d08b3-48ef-4010-9227-016bf1ac1858");
+
+        
+        // let transporter = nodemailer.createTransport({
+        //     host: "smtp.webfaction.com",
+        //     port: 25,
+        //     secure: false, // true for 465, false for other ports
+        //     auth: {
+        //       user: 'latino_mailbox_host56725a', // generated ethereal user
+        //       pass: 'host56725@mail@latino1' // generated ethereal password
+        //     }
+        //   });
         
           var rand=Math.floor((Math.random() * 10000) + 54);
           var host='local'//req.get('host');
           var link="http://"+host+"/verify?id="+rand;
-          let mailOptions = {
-            from: '"Confirmacion de Email 👻" <soporte@latino.host56725a.webfactional.com>', // sender address
-            to: newUser.email, // list of receivers
-            subject: "Confirmación de cuenta", // Subject line
-            text: "Hola" + newUser.name, // plain text body
-            html: "Inserta el siguiente código para terminar la verifación <br> CODE: " + rand  	 // html body
-          };
+          client.sendEmail({
+            "From": '"CONFIMACION DE PAGO ACADEMIA LATINO" <i1610110@continental.edu.pe>',
+            "To": "i1610110@continental.edu.pe",
+            "Subject": "CONFIMACION DE PAGO ACADEMIA LATINO",
+            "HtmlBody": "Hola " + newUser.name + "<br> Inserta el siguiente código para terminar la verifación <br> CODE: " + rand 
+        });
           
           await pool.query('UPDATE users SET code = ? where id = ?', [rand, newUser.id]);
-          let info = await transporter.sendMail(mailOptions);
+        //   let info = await transporter.sendMail(mailOptions);
           return done(null, newUser);
     }
     

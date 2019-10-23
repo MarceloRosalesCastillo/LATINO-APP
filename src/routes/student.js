@@ -4,15 +4,15 @@ const passport = require('passport');
 const { isLoggedIn, isNotLoggedIn } = require('../lib/auth');
 const pool = require('../database');
 const helpers = require('../lib/helpers');
-const nodemailer = require("nodemailer");
-const paypal = require('paypal-rest-sdk')
+const paypal = require('paypal-rest-sdk');
+const postmark = require("postmark");
 
 const datenow = new Date(Date.now()).toLocaleString();
 var idorder = "";
 
 router.get('/', isLoggedIn, async (req, res) => {
   o = await pool.query("SELECT status, date FROM enrollments WHERE UserId = ? ORDER BY date DESC", [req.user.UserId]);
-
+  // console.log(o);
   if (req.user.GroupId == 2 && (o.length <= 0 || o[0].status == "OFF")) {
     res.render('./student/studentprofile', { layout: 'student' });
   } else if (req.user.GroupId == 2 && o[0].status == "ON") {
@@ -82,7 +82,7 @@ router.get('/assistance', isLoggedIn, async (req, res) => {
 router.get('/payment', isLoggedIn, async (req, res) => {
    
   const students = await pool.query('SELECT DISTINCT students.id, users.name, users.lastname, enrollments.date, enrollments.date_quota, students.UserId from students INNER JOIN users on students.UserId = users.id INNER JOIN enrollments ON enrollments.UserId = users.id where enrollments.paymentmodality = "Cuotas" and users.id= ? order by students.id desc', [req.user.UserId]);
-   res.render('./student/payment', { layout: 'student', students});
+   res.render('./student/payment', { layout: 'studentenrollment', students});
 });
 
 router.get('/account', isLoggedIn, async (req, res) => {
@@ -149,8 +149,8 @@ router.post('/checkout/payment.json', isLoggedIn, (req, res) => {
   };
   paypal.configure({
     'mode': 'sandbox',
-    'client_id': 'AZJgR51Es2AhYDJtVZngmJDd_EB8GcPa2jeIaFiLyLX9lWBVQLI59npMSC7hMWQ7FPlAlkSu76wK9n1Z',
-    'client_secret': 'EB1rnqBmer3Y79M_xH2UVrbTbrpL45DnpBY7wbfOuto1KAvQW7qif0XbQ6jppD813w31D9Gp9BdJagxJ'
+    'client_id': 'ATxvAcwV4uajm7zwGq3k_SsjAEKmjCXuNaDQHXt8wGp-v_pU1aypq7HRl_ou2Xj6jjk1jRpMl0RsXRoE',
+    'client_secret': 'EEaUiolCwboE8P2YkkuYnGpiZCQn-pk4k8_ZQgrQCMS_fGf-zfPbgOTKsOCxh1987khmEt6D7Yfcpnvr'
 
   });
   var create_payment_json = {
@@ -160,10 +160,10 @@ router.post('/checkout/payment.json', isLoggedIn, (req, res) => {
     },
     "redirect_urls": {
       
-      "return_url": "http://latino.host56725a.webfactional.com/profile/checkout/success",
-      "cancel_url": "http://latino.host56725a.webfactional.com/profile/checkout/cancel"
-      // "return_url": "http://localhost:4000/profile/checkout/success",
-      // "cancel_url": "http://localhost:4000/profile/checkout/cancel"
+      // "return_url": "http://latino.host56725a.webfactional.com/profile/checkout/success",
+      // "cancel_url": "http://latino.host56725a.webfactional.com/profile/checkout/cancel"
+      "return_url": "http://localhost:4000/profile/checkout/success",
+      "cancel_url": "http://localhost:4000/profile/checkout/cancel"
     },
     "transactions": [{
       "item_list": {
@@ -252,6 +252,7 @@ router.get('/checkout/success', isLoggedIn, async (req, res) => {
     nquota: quota,
     rate: 0.1,
     total: monto * 3.32,
+    status: "ON",
     UserId: req.user.UserId
 
   };
@@ -262,7 +263,7 @@ router.get('/checkout/success', isLoggedIn, async (req, res) => {
         try {
           await pool.query("update enrollments set date_quota = date_add(?, interval 30 day) where id = ?", [datenow, iden]);
         } catch (error) {
-          console.log("gg esta mrda");
+          console.log("error");
         }
       }
   //update enrollments set date_quota = date_add('2019-02-21 12:42:05', interval 30 day) where id = 6
@@ -276,28 +277,19 @@ router.get('/checkout/success', isLoggedIn, async (req, res) => {
   await pool.query('insert into purchaseorderdetails set ?', [detailsorden]);
 
 
-
-  let transporter = nodemailer.createTransport({
-    host: "smtp.webfaction.com",
-    port: 25,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: 'latino_mailbox_host56725a', // generated ethereal user
-      pass: 'host56725@mail@latino1' // generated ethereal password
-    }
-  });
-
   var rand = Math.floor((Math.random() * 100) + 54);
   var host = 'local'//req.get('host');
   var link = "http://" + host + "/verify?id=" + rand;
-  let mailOptions = {
-    from: '"CONFIMACION DE PAGO ACADEMIA LATINO" <rrojasen@continental.edu.pe>', // sender address
-    to: req.user.email, // list of receivers
-    subject: "Orden", // Subject line
-    html: mailHTML(req.user.name, 'matricularte con nosotros', datenow, code, 'Fecha de transaccion', monto, monto, monto, 'http://localhost:4000/contact')	 // html body
-  };
+ 
 
-  let info = transporter.sendMail(mailOptions);
+  var client = new postmark.ServerClient("df3d08b3-48ef-4010-9227-016bf1ac1858");
+
+  client.sendEmail({
+    "From": '"CONFIMACION DE PAGO ACADEMIA LATINO" <i1610110@continental.edu.pe>',
+    "To": "i1610110@continental.edu.pe",
+    "Subject": "Test",
+    "HtmlBody": mailHTML(req.user.name, 'matricularte con nosotros', datenow, code, 'Fecha de transaccion', monto, monto, monto, 'http://localhost:4000/contact')	 // html body
+  });
 
   res.render('./student/successorder', { layout: 'studentenrollment', order: order[0] });
 
@@ -348,7 +340,7 @@ function mailHTML(_name, _reason, _date, _description, _invoice, _amount, _subam
                           <td class="attribute-list-container" style="font-family: Arial,\'Helvetica Neue\',Helvetica,sans-serif; box-sizing: border-box; word-break: break-word;">\
                             <table style="font-family: Arial,\'Helvetica Neue\',Helvetica,sans-serif; box-sizing: border-box;" width="100%" cellpadding="0" cellspacing="0">\
                               <tbody style="font-family: Arial,\'Helvetica Neue\',Helvetica,sans-serif; box-sizing: border-box;"><tr>\
-                                <td class="attribute-list-item" style="font-family: Arial,\'Helvetica Neue\',Helvetica,sans-serif; box-sizing: border-box; word-break: break-word;"><strong style="font-family: Arial,\'Helvetica Neue\',Helvetica,sans-serif; box-sizing: border-box;">Monto:</strong> ' + _amount + '</td>\
+                                <td class="attribute-list-item" style="font-family: Arial,\'Helvetica Neue\',Helvetica,sans-serif; box-sizing: border-box; word-break: break-word;"><strong style="font-family: Arial,\'Helvetica Neue\',Helvetica,sans-serif; box-sizing: border-box;">Monto:</strong> ' + '$' + _amount + '</td>\
                               </tr>\
                             </tbody></table>\
                           </td>\
@@ -381,7 +373,7 @@ function mailHTML(_name, _reason, _date, _description, _invoice, _amount, _subam
                                   <p class="purchase_total purchase_total--label" style="font-family: Arial,\'Helvetica Neue\',Helvetica,sans-serif; box-sizing: border-box; line-height: 1.5em; text-align: right; margin-top: 0; color: #2F3133; font-size: 16px; margin: 0; font-weight: bold; padding: 0 15px 0 0;">Total</p>\
                                 </td>\
                                 <td class="purchase_footer" style="font-family: Arial,\'Helvetica Neue\',Helvetica,sans-serif; box-sizing: border-box; word-break: break-word; padding-top: 15px; border-top: 1px solid #EDEFF2;" width="20%" valign="middle">\
-                                  <p class="purchase_total" style="font-family: Arial,\'Helvetica Neue\',Helvetica,sans-serif; box-sizing: border-box; line-height: 1.5em; text-align: right; margin-top: 0; color: #2F3133; font-size: 16px; margin: 0; font-weight: bold;">' + _total + '</p>\
+                                  <p class="purchase_total" style="font-family: Arial,\'Helvetica Neue\',Helvetica,sans-serif; box-sizing: border-box; line-height: 1.5em; text-align: right; margin-top: 0; color: #2F3133; font-size: 16px; margin: 0; font-weight: bold;">' + '$' + _total + '</p>\
                                 </td>\
                               </tr>\
                             </tbody></table>\

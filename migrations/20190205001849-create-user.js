@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       classname: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
         
       },
@@ -35,10 +35,11 @@ module.exports = {
       },
       authentication: {
         allowNull: false,
+        defaultValue: false,
         type: Sequelize.STRING
       },
       code: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.INTEGER
       },
       
